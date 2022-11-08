@@ -10,8 +10,7 @@ const routes: Routes = [
   {
     path: 'ladeplanung',
     loadChildren: () => import('./pages/ladeplanung/ladeplanung.module').then(m => m.LadeplanungPageModule)
-  },
-  {
+  },{
     path: 'buchung',
     loadChildren: () => import('./pages/ladeplanung/buchung/buchung.module').then(m => m.BuchungPageModule)
   }

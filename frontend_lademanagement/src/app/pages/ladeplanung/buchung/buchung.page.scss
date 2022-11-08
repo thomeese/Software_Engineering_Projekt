@@ -1,0 +1,42 @@
+
+.outerCard{
+    border-radius: 10px;
+    --background: lightgray;
+}
+
+.innerCard{
+  margin: 10px 10px 20px 10px;
+  border-radius: 10px;
+  background: rgb(128, 128, 128);
+  ion-item{
+    border-radius: 10px;
+    margin-top:25px;
+    margin-bottom:25px;
+    --background: lightgray;
+    --padding: 15px;
+  }
+
+  ion-button{
+    --border-radius: 10px;
+    margin-left: 200px;
+    margin-top: 80px;
+    --background: lightgreen;
+    --color:black;
+  }
+  button.ion-picker-item{
+    --background: lightgray;
+  }
+}
+.mainHeader{
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+.subHeader{
+  font-weight: bold;
+  --color: white;
+}
+ion-button{
+  align-content: center;
+}
+

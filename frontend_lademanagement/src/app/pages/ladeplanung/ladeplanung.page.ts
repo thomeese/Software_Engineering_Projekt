@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ModalController} from '@ionic/angular';
+import {BuchungPage} from './buchung/buchung.page';
 
 
 @Component({
@@ -7,10 +9,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ladeplanung.page.scss'],
 })
 export class LadeplanungPage implements OnInit {
+  date: Date = new Date();
 
-  constructor() {
+  constructor(private modalCtrl: ModalController) {
   }
+
   ngOnInit() {
   }
 
+  async openBookingForm(date: Date) {
+    const modal = await this.modalCtrl.create({
+      component: BuchungPage,
+      componentProps: {
+        date
+      }
+    });
+
+    await modal.present();
+  }
 }
