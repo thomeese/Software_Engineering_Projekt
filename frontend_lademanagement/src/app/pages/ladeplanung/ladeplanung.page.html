@@ -8,5 +8,27 @@
 </ion-header>
 
 <ion-content>
-
+  <div col-md-4>
+      <div class="btns">
+        <div class="btn-previousDays" >
+          <ion-button (click)="this.previousDays()">
+            Vorherige Tage
+          </ion-button>
+        </div>
+        <div class="btn-nextDays" >
+          <ion-button (click)="this.nextDays()">
+            Nächsten Tage
+          </ion-button>
+        </div>
+      </div>
+  </div>
+  <h1>Test</h1>
+  <mwl-calendar-week-view
+    [viewDate]="viewDate"
+    [daysInWeek]="daysInWeek"
+    [dayStartHour]="dayStartHour"
+    [dayEndHour]="dayEndHour"
+    [events]="events"
+  >
+  </mwl-calendar-week-view>
 </ion-content>
