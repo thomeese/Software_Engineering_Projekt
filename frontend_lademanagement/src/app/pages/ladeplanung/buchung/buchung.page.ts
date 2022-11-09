@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, LOCALE_ID, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {ModalController} from '@ionic/angular';
 import {Reservierung, SlotplanungServiceService} from '../../../services/slotplanung-service.service';
@@ -11,8 +11,9 @@ import {format} from 'date-fns';
 })
 export class BuchungPage implements OnInit {
   @Input() date: Date; // zu reservierender Tag
-  reservierungForm: FormGroup;
-
+  private reservierungForm: FormGroup;
+  private minSlottime = 30;
+  private maxSlottime = 120;
   constructor(private formbuilder: FormBuilder,
               private modalctrl: ModalController,
               private slotplanungService: SlotplanungServiceService) {
@@ -38,13 +39,18 @@ export class BuchungPage implements OnInit {
    */
   validateTime(): ValidatorFn {
     return (checkForm: FormGroup): { [key: string]: boolean } => {
-      const startzeit: Date = checkForm.getRawValue().startzeit;
-      const endzeit: Date = checkForm.getRawValue().endzeit;
-      if (startzeit > endzeit) {
-        console.log('');
+      const startzeit: Date = new Date(checkForm.get('startzeit').value);
+      const endzeit: Date = new Date(checkForm.get('endzeit').value);
+      console.log(startzeit);
+      console.log(endzeit);
+      console.log(endzeit.getTime()-startzeit.getTime());
+      if (startzeit >= endzeit) {
         return {smaller: true};
-      } else { //Hier sollen nach dem Durchstich die weiteren Pruefungen ergaenzt werden
-        console.log('cool');
+      } else if ((endzeit.getTime()-startzeit.getTime())/1000/60<this.minSlottime) {
+        return {mintimeError: true};
+      }else if ((endzeit.getTime()-startzeit.getTime())/1000/60>this.maxSlottime) {
+        return {maxtimeError: true};
+      }else { //Hier sollen nach dem Durchstich die weiteren Pruefungen ergaenzt werden
         return null;
       }
     };

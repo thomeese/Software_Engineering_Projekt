@@ -8,6 +8,7 @@ import { BuchungPageRoutingModule } from './buchung-routing.module';
 
 import { BuchungPage } from './buchung.page';
 
+
 @NgModule({
   imports: [
     CommonModule,
