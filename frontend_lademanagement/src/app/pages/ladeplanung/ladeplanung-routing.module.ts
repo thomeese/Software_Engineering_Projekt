@@ -7,10 +7,6 @@ const routes: Routes = [
   {
     path: '',
     component: LadeplanungPage
-  },
-  {
-    path: 'buchung',
-    loadChildren: () => import('./buchung/buchung.module').then( m => m.BuchungPageModule)
   }
 ];
 

@@ -1,14 +1,15 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {ModalController} from '@ionic/angular';
-import {format, parseISO} from 'date-fns';
+import {format} from 'date-fns';
 
 @Component({
   selector: 'app-buchung',
-  templateUrl: './buchung.page.html',
-  styleUrls: ['./buchung.page.scss'],
+  templateUrl: './buchung.component.html',
+  styleUrls: ['./buchung.component.scss'],
 })
-export class BuchungPage implements OnInit {
+export class BuchungComponent implements OnInit {
+
   @Input() date: Date;
   reservierungForm: FormGroup;
 
@@ -48,4 +49,5 @@ export class BuchungPage implements OnInit {
   async reservierungBuchen() {
     await this.modalctrl.dismiss();
   }
+
 }
