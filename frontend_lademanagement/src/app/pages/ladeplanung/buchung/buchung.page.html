@@ -17,7 +17,6 @@
               </ion-datetime>
             </ng-template>
           </ion-modal>
-          <ion-note slot="error" *ngIf="reservierungForm.dirty"> Gültige Startzeit auswählen.</ion-note>
         </ion-item>
         <ion-item>
           <ion-label>Endzeit:</ion-label>
@@ -31,9 +30,8 @@
               </ion-datetime>
             </ng-template>
           </ion-modal>
-          <ion-note slot="error" *ngIf="reservierungForm.dirty"> Gültige Endzeit auswählen.</ion-note>
         </ion-item>
-        <ion-button slot="center" type="submit" [disabled]="!reservierungForm.valid">Slot buchen</ion-button>
+        <ion-button slot="center" type="submit" [disabled]="reservierungForm.invalid">Slot buchen</ion-button>
       </form>
     </ion-card-content>
   </ion-card>
