@@ -53,58 +53,58 @@ export class LadeplanungPage implements OnInit {
 
     //Freie Slots holen
     //this.slotplanungService.getFreeSlots().subscribe((data: Slot[]) => this.freeSlots = data);
-    for(let slot of this.freeSlots) {
+    for(const slot of this.freeSlots) {
       this.events.push({
-        start: slot.start, 
+        start: slot.start,
         end: slot.stop,
-        title: "frei",
+        title: 'frei',
         color: {
-            primary: "blue",
-            secondary: "white"}
-        })
+            primary: 'blue',
+            secondary: 'white'}
+        });
     }
 
     //Eigene Slots holen
     //this.slotplanungService.getOwnSlots().subscribe((data: Slot[]) => this.ownSlots = data);
-    for(let slot of this.freeSlots) {
+    for(const slot of this.freeSlots) {
       this.events.push({
-        start: slot.start, 
+        start: slot.start,
         end: slot.stop,
-        title: "Meine Buchung",
+        title: 'Meine Buchung',
         color: {
-            primary: "gelb",
-            secondary: "white"},
+            primary: 'gelb',
+            secondary: 'white'},
         actions: [
           {
             label: '<i class="fas fa-fw fa-trash-alt"></i>',
             onClick: ({ event }: { event: CalendarEvent }): void => {
             //Im Durchstich nicht gefordert
-            //hier erfolgt später das löschen/bearbeiten eines eigenen bereits gebuchten Slot
+            //hier erfolgt später das loeschen/bearbeiten eines eigenen bereits gebuchten Slot
             },
           },
         ]
-      })
+      });
     }
 
 
     //Beispiel Event
     this.events.push({
-      start: new Date(), 
-      end: new Date("2022-11-10"),
-      title: "Meine Buchung",
+      start: new Date(),
+      end: new Date('2022-11-10'),
+      title: 'Meine Buchung',
       color: {
-          primary: "black",
-          secondary: "blue"},
+          primary: 'black',
+          secondary: 'blue'},
       actions: [
         {
           label: '<i class="fas fa-fw fa-trash-alt"></i>',
           onClick: ({ event }: { event: CalendarEvent }): void => {
           //Im Durchstich nicht gefordert
-          //hier erfolgt später das löschen/bearbeiten eines eigenen bereits gebuchten Slot
+          //hier erfolgt später das loeschen/bearbeiten eines eigenen bereits gebuchten Slot
           },
         },
       ]
-    })
+    });
 
     const CALENDAR_RESPONSIVE = {
       small: {
@@ -137,13 +137,13 @@ export class LadeplanungPage implements OnInit {
         }
         this.cd.markForCheck();
       });
-  } 
+  }
 
   //Gibt die vorherigen Tage abhaengig von der Bildschirmgroesse aus
   //Es wird minimal der heutige Tag angezeigt
   previousDays() {
-    let setDate = new Date(this.viewDate.setDate(this.viewDate.getDate() - this.daysInWeek));
-    let date = new Date();
+    const setDate = new Date(this.viewDate.setDate(this.viewDate.getDate() - this.daysInWeek));
+    const date = new Date();
     if(setDate.getTime() > date.getTime()) {
       this.viewDate = setDate;
     } else {
@@ -155,7 +155,7 @@ export class LadeplanungPage implements OnInit {
   //Gibt die naechsten Tage abhaengig von der Bildschirmgroesse aus
   //Es kann maximal der naechste siebte Tag angezeigt werden
   nextDays() {
-    let setDate = new Date(this.viewDate.setDate(this.viewDate.getDate() + this.daysInWeek));
+    const setDate = new Date(this.viewDate.setDate(this.viewDate.getDate() + this.daysInWeek));
     let date = new Date();
     date = new Date(date.setDate(date.getDate() + 7 - this.daysInWeek));
     if(setDate.getTime() > date.getTime()) {
