@@ -67,3 +67,11 @@ Falls **Probleme** auftreten.
 ```
 ionic repair
 ```
+
+# Docker 
+# Ausführen
+
+Um den Code im Docker Container auszuführen einmal in den Ordner `frontend_lademanagemt` wechseln. Und dann diese Zeile ausführen
+```
+docker compose up -d
+```
