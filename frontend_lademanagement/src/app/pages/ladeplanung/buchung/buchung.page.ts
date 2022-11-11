@@ -1,7 +1,7 @@
 import {Component, Input, LOCALE_ID, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {ModalController} from '@ionic/angular';
-import {Reservierung, SlotplanungServiceService} from '../../../services/slotplanung-service.service';
+import {Reservierung, SlotPlanungServiceService} from '../../../services/slot-planung-service.service';
 import {format} from 'date-fns';
 
 @Component({
@@ -10,21 +10,26 @@ import {format} from 'date-fns';
   styleUrls: ['./buchung.page.scss'],
 })
 export class BuchungPage implements OnInit {
-  @Input() date: Date; // zu reservierender Tag
+  @Input() startDate: Date; // zu reservierender Tag
+  @Input() endDate: Date; // zu reservierender Tag
   private reservierungForm: FormGroup;
   private minSlottime = 30;
   private maxSlottime = 120;
 
   constructor(private formbuilder: FormBuilder,
               private modalctrl: ModalController,
-              private slotplanungService: SlotplanungServiceService) {
+              private slotplanungService: SlotPlanungServiceService) {
   }
 
   ngOnInit() {
     //Reactive-form erstellen
+    //Formatiere Date zu ISOString mit Timezonen Beruecksichtigung
+    const startDateISOWithTimezone = new Date(this.startDate.getTime() - (this.startDate.getTimezoneOffset()*60000)).toISOString();
+    const endDateISOWithTimezone = new Date(this.endDate.getTime() - (this.endDate.getTimezoneOffset()*60000)).toISOString();
+
     this.reservierungForm = this.formbuilder.group({
-        startzeit: new FormControl(new Date().toISOString(), Validators.required),
-        endzeit: new FormControl(new Date().toISOString(), Validators.required)
+        startzeit: new FormControl(startDateISOWithTimezone, Validators.required),
+        endzeit: new FormControl(endDateISOWithTimezone, Validators.required)
       },
       {
         validator: this.validateTime()
@@ -32,7 +37,7 @@ export class BuchungPage implements OnInit {
   }
 
   formateDate() {
-    return format(new Date(this.date), 'EEEE dd.MM.yyyy').toString();
+    return format(new Date(this.startDate), 'EEEE dd.MM.yyyy').toString();
   }
 
   /**
@@ -71,7 +76,6 @@ export class BuchungPage implements OnInit {
   }
 
   async closeModal() {
-    console.log('hello');
     await this.modalctrl.dismiss();
   }
 }

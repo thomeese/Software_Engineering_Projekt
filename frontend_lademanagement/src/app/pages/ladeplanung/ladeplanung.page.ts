@@ -1,14 +1,13 @@
 import {
-  ChangeDetectionStrategy,
+  Component,
+  OnInit,
   OnDestroy,
-  ChangeDetectorRef,
+  ChangeDetectorRef
 } from '@angular/core';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { CalendarEvent, CalendarView } from 'angular-calendar';
+import { CalendarEvent } from 'angular-calendar';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { SlotplanungServiceService } from 'src/app/services/slotplanung-service.service';
-import {Component, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {BuchungPage} from './buchung/buchung.page';
 import {SlotPlanungServiceService} from 'src/app/services/slot-planung-service.service';
@@ -68,7 +67,7 @@ export class LadeplanungPage implements OnInit {
         this.events.push({
           start: slot.start,
           end: slot.stop,
-          title: 'frei',
+          title: 'Frei',
           color: {
             primary: 'blue',
             secondary: 'white'
@@ -105,12 +104,13 @@ export class LadeplanungPage implements OnInit {
     this.events.push({
       start: new Date(1668243600 * 1000),
       end: new Date(1668250800 * 1000),
-      title: 'frei',
+      title: 'Frei',
       color: {
         primary: 'black',
         secondary: 'green'
       }
     });
+
 
     const CALENDAR_RESPONSIVE = {
       small: {
@@ -174,11 +174,12 @@ export class LadeplanungPage implements OnInit {
       this.viewDate = setDate;
     }
   }
-  async openBookSlotModal(date: Date) {
+  async openBookSlotModal(startDate: Date, endDate: Date) {
     const modal = await this.modalCtrl.create({
       component: BuchungPage,
       componentProps: {
-        date
+        startDate,
+        endDate
       },
       backdropDismiss: true
     });
@@ -191,10 +192,8 @@ export class LadeplanungPage implements OnInit {
   handleEvent(action: string, event: CalendarEvent): void {
     if (event.title === 'Meine Buchung') {
       //Meine Buchung bearbeiten
-      console.log('Meine Buchung bearbeiten');
-    } else if (event.title === 'frei') {
+    } else if (event.title === 'Frei') {
       //Freien Slot angeklickt Bchung starten
-      console.log('Freier Slot');
       this.openBookSlotModal(event.start, event.end);
     }
   }
