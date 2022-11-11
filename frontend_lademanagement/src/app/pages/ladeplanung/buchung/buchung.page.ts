@@ -37,7 +37,7 @@ export class BuchungPage implements OnInit {
 
   /**
    * prueft die Nutzereingabe. Es wird dabei validiert, ob die gehaehlten Zeiten
-   * den Regeln des Regelwerks entsprechhen
+   * den Regeln des Regelwerks entsprechen.
    */
   validateTime(): ValidatorFn {
     return (checkForm: FormGroup): { [key: string]: boolean } => {
