@@ -1,6 +1,4 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
   OnDestroy,
   ChangeDetectorRef,
@@ -10,7 +8,9 @@ import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SlotplanungServiceService } from 'src/app/services/slotplanung-service.service';
-
+import {Component, OnInit} from '@angular/core';
+import {ModalController} from '@ionic/angular';
+import {BuchungPage} from './buchung/buchung.page';
 
 
 export interface Slot {
@@ -26,6 +26,7 @@ export interface Slot {
 
 //https://mattlewis92.github.io/angular-calendar/#/responsive-week-view
 export class LadeplanungPage implements OnInit {
+  date: Date = new Date();
 
   viewDate: Date = new Date();
 
@@ -45,7 +46,8 @@ export class LadeplanungPage implements OnInit {
   constructor(
     private slotplanungService: SlotplanungServiceService,
     private breakpointObserver: BreakpointObserver,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private modalCtrl: ModalController
   ) {}
 
   ngOnInit() {
@@ -166,8 +168,16 @@ export class LadeplanungPage implements OnInit {
     }
   }
 
-  openBookSlotModal() {
-    //Component Slot buchen oeffnen
+  async openBookSlotModal(date: Date) {
+    const modal = await this.modalCtrl.create({
+      component: BuchungPage,
+      componentProps: {
+        date
+      },
+      backdropDismiss: true
+    });
+
+    await modal.present();
   }
 
   ngOnDestroy() {

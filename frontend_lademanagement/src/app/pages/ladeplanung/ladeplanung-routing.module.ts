@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'buchung',
-    loadChildren: () => import('./buchung/buchung.module').then( m => m.BuchungPageModule)
+    loadChildren: () => import('./buchung/buchung.module').then(m => m.Buchung2PageModule)
   }
 ];
 
