@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 
 
 export interface SlotID {
@@ -11,6 +13,12 @@ export interface Reservierung {
   startzeit: string;
   endzeit: string;
 }
+
+export interface Slot {
+  start: Date;
+  stop: Date;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -35,4 +43,12 @@ export class SlotplanungServiceService {
     return this.http.post<SlotID>('<url>/rest/planung', {headers: header, params: httpParams});
   }
 
+
+  getOwnSlots() {
+    return this.http.get<Slot[]>('<url>/rest/planung');
+  }
+
+  getFreeSlots() {
+    return this.http.get<Slot[]>('<url>/rest/planung?frei=1');
+  }
 }
