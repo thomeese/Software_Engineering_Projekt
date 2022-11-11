@@ -22,7 +22,8 @@ export class LadeplanungPage implements OnInit {
       component: BuchungPage,
       componentProps: {
         date
-      }
+      },
+      backdropDismiss: true
     });
 
     await modal.present();

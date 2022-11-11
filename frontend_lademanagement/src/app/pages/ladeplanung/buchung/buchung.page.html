@@ -1,7 +1,7 @@
 
 
 <ion-card class="outerCard">
-  <ion-card-header class="mainHeader">Slot Reservierung</ion-card-header>
+    <ion-card-header class="mainHeader">Slot Reservierung</ion-card-header>
   <ion-card class="innerCard">
     <ion-card-header class="subHeader">{{this.formateDate()}}</ion-card-header>
     <ion-card-content>
@@ -31,10 +31,10 @@
             </ng-template>
           </ion-modal>
         </ion-item>
-        <ion-button slot="center" type="submit" [disabled]="reservierungForm.invalid">Slot buchen</ion-button>
+        <ion-button class="submitButton" type="submit" [disabled]="reservierungForm.invalid">Slot buchen</ion-button>
       </form>
     </ion-card-content>
   </ion-card>
 </ion-card>
 
-
+<ion-button class="closeButton" color="danger" shape="round" size = "small" (click)="this.closeModal()"><ion-icon name="close-circle-outline" ></ion-icon></ion-button>

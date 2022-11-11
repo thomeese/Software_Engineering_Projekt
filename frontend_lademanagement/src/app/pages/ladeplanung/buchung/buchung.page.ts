@@ -14,6 +14,7 @@ export class BuchungPage implements OnInit {
   private reservierungForm: FormGroup;
   private minSlottime = 30;
   private maxSlottime = 120;
+
   constructor(private formbuilder: FormBuilder,
               private modalctrl: ModalController,
               private slotplanungService: SlotplanungServiceService) {
@@ -43,19 +44,24 @@ export class BuchungPage implements OnInit {
       const endzeit: Date = new Date(checkForm.get('endzeit').value);
       console.log(startzeit);
       console.log(endzeit);
-      console.log(endzeit.getTime()-startzeit.getTime());
+      console.log(endzeit.getTime() - startzeit.getTime());
       if (startzeit >= endzeit) {
         return {smaller: true};
-      } else if ((endzeit.getTime()-startzeit.getTime())/1000/60<this.minSlottime) {
+      } else if ((endzeit.getTime() - startzeit.getTime()) / 1000 / 60 < this.minSlottime) {
         return {mintimeError: true};
-      }else if ((endzeit.getTime()-startzeit.getTime())/1000/60>this.maxSlottime) {
+      } else if ((endzeit.getTime() - startzeit.getTime()) / 1000 / 60 > this.maxSlottime) {
         return {maxtimeError: true};
-      }else { //Hier sollen nach dem Durchstich die weiteren Pruefungen ergaenzt werden
+      } else { //Hier sollen nach dem Durchstich die weiteren Pruefungen ergaenzt werden
         return null;
       }
     };
   }
 
+  /**
+   * Die Funktion uebermittelt die vom Nutzer eingegebenen Daten
+   * an die REST-Schnitstelle. Fuer die Uebermittlung wird der
+   * Service SlotplanungService verwendet.
+   */
   async reservierungBuchen() {
     const reservierung: Reservierung = {
       mitarbeiterID: '02347234',
@@ -63,6 +69,11 @@ export class BuchungPage implements OnInit {
       endzeit: this.reservierungForm.getRawValue().endzeit.toString(),
     };
     this.slotplanungService.postBookedSlot(reservierung);
+    await this.modalctrl.dismiss();
+  }
+
+  async closeModal() {
+    console.log('hello');
     await this.modalctrl.dismiss();
   }
 }
