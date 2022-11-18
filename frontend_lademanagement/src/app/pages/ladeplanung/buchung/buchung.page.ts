@@ -1,8 +1,9 @@
 import {Component, Input, LOCALE_ID, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {ModalController} from '@ionic/angular';
-import {Reservierung, SlotPlanungServiceService} from '../../../services/slot-planung-service.service';
+import {SlotPlanungServiceService} from '../../../services/slot-planung-service.service';
 import {format} from 'date-fns';
+import {Reservierung} from '../../../interfaces/interfaces';
 
 @Component({
   selector: 'app-buchung',
@@ -54,7 +55,7 @@ export class BuchungPage implements OnInit {
         return {mintimeError: true};
       } else if ((endzeit.getTime() - startzeit.getTime()) / 1000 / 60 > this.maxSlottime) {
         return {maxtimeError: true};
-      } else { //Hier sollen nach dem Durchstich die weiteren Pruefungen ergaenzt werden
+      } else { //TODO: Hier sollen nach dem Durchstich die weiteren Pruefungen ergaenzt werden
         return null;
       }
     };
@@ -67,6 +68,7 @@ export class BuchungPage implements OnInit {
    */
   async reservierungBuchen() {
     const reservierung: Reservierung = {
+      //TODO: MitarbeiterID hartegecoded muesste noch angepasst werden, wenn Login umgesetzt wird
       mitarbeiterID: '02347234',
       startzeit: this.reservierungForm.getRawValue().startzeit.toString(),
       endzeit: this.reservierungForm.getRawValue().endzeit.toString(),

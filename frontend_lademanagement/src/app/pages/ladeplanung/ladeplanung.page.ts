@@ -1,37 +1,32 @@
 import {
   Component,
   OnInit,
-  OnDestroy,
   ChangeDetectorRef
 } from '@angular/core';
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { CalendarEvent } from 'angular-calendar';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import {ModalController} from '@ionic/angular';
+import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
+import {CalendarEvent} from 'angular-calendar';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {LoadingController, ModalController} from '@ionic/angular';
 import {BuchungPage} from './buchung/buchung.page';
 import {SlotPlanungServiceService} from 'src/app/services/slot-planung-service.service';
+import {Slot} from '../../interfaces/interfaces';
+import { registerLocaleData } from '@angular/common';
+import localeDE from '@angular/common/locales/de';
 
-import {AUTO_STYLE} from '@angular/animations';
+registerLocaleData(localeDE);
 
-interface SlotJSON {
-  start: number;
-  stop: number;
-}
-
-interface Slot {
-  start: Date;
-  stop: Date;
-}
 
 @Component({
   selector: 'app-ladeplanung',
   templateUrl: './ladeplanung.page.html',
   styleUrls: ['./ladeplanung.page.scss'],
 })
-//https://mattlewis92.github.io/angular-calendar/#/responsive-week-view
+
+
+//Basis Kalender hier zu finden: https://mattlewis92.github.io/angular-calendar/#/responsive-week-view
 export class LadeplanungPage implements OnInit {
-  date: Date = new Date();
+  language = localeDE;
   viewDate: Date = new Date();
   //Anzahl der zu zeigenden naechsten Tage
   daysInWeek = 7;
@@ -44,7 +39,9 @@ export class LadeplanungPage implements OnInit {
 
   ownSlots: Slot[] = [];
   freeSlots: Slot[] = [];
-  events: CalendarEvent[] = [];
+
+  //Haelt die Kalendereintraege, welche angezeigt werden sollen
+  events: CalendarEvent[] = null;
 
   private destroy$ = new Subject<void>();
 
@@ -52,66 +49,16 @@ export class LadeplanungPage implements OnInit {
     private slotplanungService: SlotPlanungServiceService,
     private breakpointObserver: BreakpointObserver,
     private cd: ChangeDetectorRef,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private loadingCtrl: LoadingController
   ) {
   }
 
   ngOnInit() {
-    //Zeitraume vom ZeitplanungService holen
-    //Freie Slots holen
-    this.slotplanungService.getFreeSlots().subscribe((data: SlotJSON[]) => {
-      for (const slotJSON of data) {
-        //Slot konvertieren um Objekt Date zu nutzen fuer Kalenderansicht
-        const slot: Slot = {start: new Date(slotJSON.start * 1000), stop: new Date(slotJSON.start * 1000)};
-        this.freeSlots.push(slot);
-        this.events.push({
-          start: slot.start,
-          end: slot.stop,
-          title: 'Frei',
-          color: {
-            primary: 'blue',
-            secondary: 'white'
-          }
-        });
-      }
-    });
-    //Eigene Slots holen
-    this.slotplanungService.getOwnSlots().subscribe((data: SlotJSON[]) => {
-      for (const slotJSON of data) {
-        //Slot konvertieren um Objekt Date zu nutzen fuer Kalenderansicht
-        const slot: Slot = {start: new Date(slotJSON.start * 1000), stop: new Date(slotJSON.start * 1000)};
-        this.ownSlots.push(slot);
-        this.events.push({
-          start: slot.start,
-          end: slot.stop,
-          title: 'Meine Buchung',
-          color: {
-            primary: 'gelb',
-            secondary: 'white'
-          }
-        });
-      }
-    });
-    //Beispiel Event Meine Buchung
-    this.events.push({
-      start: new Date(1668157200 * 1000),
-      title: 'Meine Buchung',
-      color: {
-        primary: 'black',
-        secondary: 'blue'
-      }
-    });
-    this.events.push({
-      start: new Date(1668243600 * 1000),
-      end: new Date(1668250800 * 1000),
-      title: 'Frei',
-      color: {
-        primary: 'black',
-        secondary: 'green'
-      }
-    });
 
+    this.holeTermine();
 
+    // Dient zum Setzen der Variablen abhaengig von der Bildschirmgroesse
     const CALENDAR_RESPONSIVE = {
       small: {
         breakpoint: '(max-width: 576px)',
@@ -130,6 +77,7 @@ export class LadeplanungPage implements OnInit {
       },
     };
 
+    //Beobachtet die Bildschirmgroesse und aendert den Kalender und die Anzeige der Buttons abhaengig davon
     this.breakpointObserver
       .observe(
         Object.values(CALENDAR_RESPONSIVE).map(({breakpoint}) => breakpoint))
@@ -149,6 +97,7 @@ export class LadeplanungPage implements OnInit {
         this.cd.markForCheck();
       });
   }
+
   //Gibt die vorherigen Tage abhaengig von der Bildschirmgroesse aus
   //Es wird minimal der heutige Tag angezeigt
   previousDays() {
@@ -161,6 +110,7 @@ export class LadeplanungPage implements OnInit {
       this.viewDate = date;
     }
   }
+
   //Gibt die naechsten Tage abhaengig von der Bildschirmgroesse aus
   //Es kann maximal der naechste siebte Tag angezeigt werden
   nextDays() {
@@ -174,6 +124,7 @@ export class LadeplanungPage implements OnInit {
       this.viewDate = setDate;
     }
   }
+
   async openBookSlotModal(startDate: Date, endDate: Date) {
     const modal = await this.modalCtrl.create({
       component: BuchungPage,
@@ -187,8 +138,8 @@ export class LadeplanungPage implements OnInit {
     await modal.present();
   }
 
-  //wird beim anklicken eines Events ausgefuehrt
 
+  //wird beim Anklicken eines Kalendereintrags ausgefuehrt
   handleEvent(action: string, event: CalendarEvent): void {
     if (event.title === 'Meine Buchung') {
       //Meine Buchung bearbeiten
@@ -200,5 +151,72 @@ export class LadeplanungPage implements OnInit {
 
   ngOnDestroy() {
     this.destroy$.next();
+  }
+
+  /**
+   * Holt alle freien Slots der naechsten sieben Tage und erstellt die dazugehoerigen Kalendereintraege.
+   *
+   * @return gibt die Kalendereintrage zurueck.
+   */
+  async holeFreieSlots(): Promise<CalendarEvent[]>{
+      const asyncEvents: CalendarEvent[] = [];
+      //Zeitraume vom ZeitplanungService holen
+      //Freie Slots holen
+      const data = await this.slotplanungService.getFreeSlots().toPromise();
+      for (const slot of data) {
+        this.freeSlots.push(slot);
+        asyncEvents.push({
+          start: slot.startzeit,
+          end: slot.endzeit,
+          title: 'Frei',
+          color: {
+            primary: 'blue',
+            secondary: 'white'
+          }
+        });
+      }
+      return asyncEvents;
+  }
+
+  /**
+   * Holt alle eigenen Reservierungen der naechsten sieben Tage und erstellt die dazugehoerigen Kalendereintraege.
+   *
+   * @return gibt die Kalendereintrage zurueck.
+   */
+  async holeEigeneReservierungen(): Promise<CalendarEvent[]> {
+      const data = await this.slotplanungService.getOwnSlots().toPromise();
+        const asyncEvents: CalendarEvent[] = [];
+        for (const slot of data) {
+          this.ownSlots.push(slot);
+          asyncEvents.push({
+            start: slot.startzeit,
+            end: slot.endzeit,
+            title: 'Meine Buchung',
+            color: {
+              primary: 'yellow',
+              secondary: 'white'
+            }
+          });
+        }
+        return asyncEvents;
+  }
+
+  /**
+   * Ruft die beiden Methoden zum Holen der eigenen und freien Slots der naechsten sieben Tage auf fuegt im Anschluss
+   * die Rueckgabewerte zusammen zu der this.events variablen, damit der Kalender angezeigt wird.
+   *
+   * Waehrend das Holen nicht abgeschlossen ist, wird ein Ladespinner angezeigt.
+   */
+  private async holeTermine() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Lade Kalendereinträge',
+      duration: 3000,
+      spinner: 'circles',
+    });
+    await loading.present();
+    const eigeneReservierungen = await this.holeEigeneReservierungen() as CalendarEvent[];
+    const freieSlots =  await this.holeFreieSlots() as CalendarEvent[];
+    this.events = eigeneReservierungen.concat(freieSlots);
+    await loading.dismiss();
   }
 }

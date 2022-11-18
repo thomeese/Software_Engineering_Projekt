@@ -1,44 +1,49 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-
-interface SlotJSON {
-  start: number;
-  stop: number;
-}
-
-
-export interface SlotID {
-  slotID: number;
-}
-
-export interface Reservierung {
-  mitarbeiterID: string;
-  startzeit: string;
-  endzeit: string;
-}
-
-export interface Slot {
-  start: Date;
-  stop: Date;
-}
+import { Observable } from 'rxjs';
+import {Reservierung, Slot, SlotID, SlotJSON} from '../interfaces/interfaces';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SlotPlanungServiceService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient){}
 
-  //Holt alle eigenen gebuchten Slots
-  getOwnSlots(): Observable<SlotJSON[]> {
-    return this.http.get<SlotJSON[]>('<url>/rest/planung');
+  /**
+   * Holt alle eigenen gebuchten Slots von dem Backend und formatiert diese als eine Liste von Slots zurueck.
+   */
+  getOwnSlots(): Observable<Slot[]> {
+    return this.http.get<SlotJSON[]>('http://localhost:8080/backend_war/rest/slot')
+      .pipe(
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+        map((results) => <Slot[]> results.map((slot: SlotJSON) => <Slot> {
+          startzeit: new Date(slot.startzeit * 1000),
+          endzeit: new Date(slot.endzeit * 1000),
+          fruehsterEinsteckzeitpunkt: new Date(slot.fruehsterEinsteckzeitpunkt * 1000),
+          spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt * 1000)
+          })
+        )
+      );
   }
 
-  //Holt alle freien Zeitraeume
-  getFreeSlots(): Observable<SlotJSON[]> {
-    return this.http.get<SlotJSON[]>('<url>/rest/planung?frei=1');
+  /**
+   * Holt alle freien Slots von dem Backend und formatiert diese als eine Liste von Slots zurueck.
+   */
+  getFreeSlots(): Observable<Slot[]> {
+    //TODO: eventuell wird hier der falsche Typ erwartet muesste es nicht eine Reservierung sein
+    return this.http.get<SlotJSON[]>('http://localhost:8080/backend_war/rest/slot?frei=1')
+      .pipe(
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+        map((results) => <Slot[]> results.map((slot: SlotJSON) => <Slot> {
+          startzeit: new Date(slot.startzeit * 1000),
+          endzeit: new Date(slot.endzeit * 1000),
+          fruehsterEinsteckzeitpunkt: new Date(slot.fruehsterEinsteckzeitpunkt * 1000),
+          spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt * 1000)
+          })
+        )
+      );
   }
 
   postBookedSlot(booking: Reservierung) {
