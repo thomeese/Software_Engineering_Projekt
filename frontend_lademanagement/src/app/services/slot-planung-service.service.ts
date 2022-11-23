@@ -17,13 +17,12 @@ export class SlotPlanungServiceService {
   getOwnSlots(): Observable<Slot[]> {
     return this.http.get<SlotJSON[]>('http://localhost:8080/backend_war/rest/slot')
       .pipe(
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        map((results) => <Slot[]> results.map((slot: SlotJSON) => <Slot> {
+        map((results: SlotJSON[]) => results.map((slot: SlotJSON) => ({
           startzeit: new Date(slot.startzeit * 1000),
           endzeit: new Date(slot.endzeit * 1000),
           fruehsterEinsteckzeitpunkt: new Date(slot.fruehsterEinsteckzeitpunkt * 1000),
           spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt * 1000)
-          })
+          } as Slot)) as Slot[]
         )
       );
   }
@@ -35,13 +34,12 @@ export class SlotPlanungServiceService {
     //TODO: eventuell wird hier der falsche Typ erwartet muesste es nicht eine Reservierung sein
     return this.http.get<SlotJSON[]>('http://localhost:8080/backend_war/rest/slot?frei=1')
       .pipe(
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        map((results) => <Slot[]> results.map((slot: SlotJSON) => <Slot> {
+        map((results: SlotJSON[]) => results.map((slot: SlotJSON) => ({
           startzeit: new Date(slot.startzeit * 1000),
           endzeit: new Date(slot.endzeit * 1000),
           fruehsterEinsteckzeitpunkt: new Date(slot.fruehsterEinsteckzeitpunkt * 1000),
           spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt * 1000)
-          })
+          } as Slot)) as Slot[]
         )
       );
   }
