@@ -8,14 +8,14 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SlotPlanungServiceService {
-
+  readonly rootUrl = 'http://192.168.2.6:8080/backend_war_exploded';
   constructor(private http: HttpClient){}
 
   /**
    * Holt alle eigenen gebuchten Slots von dem Backend und formatiert diese als eine Liste von Slots zurueck.
    */
   getOwnSlots(): Observable<Slot[]> {
-    return this.http.get<SlotJSON[]>('http://localhost:8080/backend_war/rest/slot')
+    return this.http.get<SlotJSON[]>(this.rootUrl+'/rest/slot')
       .pipe(
         map((results: SlotJSON[]) => results.map((slot: SlotJSON) => ({
           startzeit: new Date(slot.startzeit * 1000),
@@ -32,7 +32,7 @@ export class SlotPlanungServiceService {
    */
   getFreeSlots(): Observable<Slot[]> {
     //TODO: eventuell wird hier der falsche Typ erwartet muesste es nicht eine Reservierung sein
-    return this.http.get<SlotJSON[]>('http://localhost:8080/backend_war/rest/slot?frei=1')
+    return this.http.get<SlotJSON[]>(this.rootUrl+'/rest/slot?frei=1')
       .pipe(
         map((results: SlotJSON[]) => results.map((slot: SlotJSON) => ({
           startzeit: new Date(slot.startzeit * 1000),
@@ -47,12 +47,12 @@ export class SlotPlanungServiceService {
   postBookedSlot(booking: Reservierung) {
     const header = new HttpHeaders();
     header.set('Content-Type', 'application/json');
-
+    //TODO : mitarbeiterId ueber Token loesen
     const httpParams = new HttpParams();
     httpParams.set('mitarbeiterID', booking.mitarbeiterID);
     httpParams.set('startzeit', booking.startzeit);
     httpParams.set('endzeit', booking.endzeit);
 
-    return this.http.post<SlotID>('<url>/rest/planung', {headers: header, params: httpParams});
+    return this.http.post<SlotID>(this.rootUrl+'/rest/planung', {headers: header, params: httpParams});
   }
 }

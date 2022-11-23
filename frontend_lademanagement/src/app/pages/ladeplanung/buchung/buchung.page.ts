@@ -69,7 +69,7 @@ export class BuchungPage implements OnInit {
   async reservierungBuchen() {
     const reservierung: Reservierung = {
       //TODO: MitarbeiterID hartegecoded muesste noch angepasst werden, wenn Login umgesetzt wird
-      mitarbeiterID: '02347234',
+      mitarbeiterID: '1',
       startzeit: this.reservierungForm.getRawValue().startzeit.toString(),
       endzeit: this.reservierungForm.getRawValue().endzeit.toString(),
     };
