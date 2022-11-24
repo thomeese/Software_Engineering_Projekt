@@ -25,8 +25,8 @@ export class BuchungPage implements OnInit {
   ngOnInit() {
     //Reactive-form erstellen
     //Formatiere Date zu ISOString mit Timezonen Beruecksichtigung
-    const startDateISOWithTimezone = new Date(this.startDate.getTime() - (this.startDate.getTimezoneOffset()*60000)).toISOString();
-    const endDateISOWithTimezone = new Date(this.endDate.getTime() - (this.endDate.getTimezoneOffset()*60000)).toISOString();
+    const startDateISOWithTimezone = new Date(this.startDate.getTime() - (this.startDate.getTimezoneOffset() * 60000)).toISOString();
+    const endDateISOWithTimezone = new Date(this.endDate.getTime() - (this.endDate.getTimezoneOffset() * 60000)).toISOString();
 
     this.reservierungForm = this.formbuilder.group({
         startzeit: new FormControl(startDateISOWithTimezone, Validators.required),
@@ -70,12 +70,16 @@ export class BuchungPage implements OnInit {
     const reservierung: Reservierung = {
       //TODO: MitarbeiterID hartegecoded muesste noch angepasst werden, wenn Login umgesetzt wird
       mitarbeiterID: '1',
-      startzeit: this.reservierungForm.getRawValue().startzeit.toString(),
-      endzeit: this.reservierungForm.getRawValue().endzeit.toString(),
+      //Z aus DateString entfernen, da es sonst dem ISO 8601 entspricht
+      startzeit: this.reservierungForm.getRawValue().startzeit.toString().replace('Z', ''),
+      endzeit: this.reservierungForm.getRawValue().endzeit.toString().replace('Z', ''),
     };
-    console.log("Reservierung erstellen.");
-    this.slotplanungService.postBookedSlot(reservierung);
-    await this.modalctrl.dismiss();
+    console.log('Reservierung erstellen.');
+    this.slotplanungService.postBookedSlot(reservierung).subscribe(slotID => {
+      console.log('SlotID: ');
+      console.log(slotID);
+      this.closeModal();
+    });
   }
 
   async closeModal() {

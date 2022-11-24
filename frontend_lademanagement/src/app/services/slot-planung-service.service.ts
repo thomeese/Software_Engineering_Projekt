@@ -1,6 +1,6 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 import {Reservierung, Slot, SlotID, SlotJSON} from '../interfaces/interfaces';
 import {map} from 'rxjs/operators';
 
@@ -9,19 +9,20 @@ import {map} from 'rxjs/operators';
 })
 export class SlotPlanungServiceService {
   readonly rootUrl = 'http://localhost:8080/backend_war'; //http://192.168.2.6:8080/backend_war_exploded
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {
+  }
 
   /**
    * Holt alle eigenen gebuchten Slots von dem Backend und formatiert diese als eine Liste von Slots zurueck.
    */
   getOwnSlots(): Observable<Slot[]> {
-    return this.http.get<SlotJSON[]>(this.rootUrl+'/rest/slot')
+    return this.http.get<SlotJSON[]>(this.rootUrl + '/rest/slot')
       .pipe(
         map((results: SlotJSON[]) => results.map((slot: SlotJSON) => ({
-          startzeit: new Date(slot.startzeit),
-          endzeit: new Date(slot.endzeit),
-          fruehsterEinsteckzeitpunkt: new Date(slot.fruehsterEinsteckzeitpunkt),
-          spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt)
+            startzeit: new Date(slot.startzeit),
+            endzeit: new Date(slot.endzeit),
+            fruehsterEinsteckzeitpunkt: new Date(slot.fruehsterEinsteckzeitpunkt),
+            spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt)
           } as Slot)) as Slot[]
         )
       );
@@ -32,28 +33,25 @@ export class SlotPlanungServiceService {
    */
   getFreeSlots(): Observable<Slot[]> {
     //TODO: eventuell wird hier der falsche Typ erwartet muesste es nicht eine Reservierung sein
-    return this.http.get<SlotJSON[]>(this.rootUrl+'/rest/slot?frei=1')
+    return this.http.get<SlotJSON[]>(this.rootUrl + '/rest/slot?frei=1')
       .pipe(
         map((results: SlotJSON[]) => results.map((slot: SlotJSON) => ({
-          startzeit: new Date(slot.startzeit),
-          endzeit: new Date(slot.endzeit),
-          fruehsterEinsteckzeitpunkt: new Date(slot.fruehsterEinsteckzeitpunkt),
-          spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt)
+            startzeit: new Date(slot.startzeit),
+            endzeit: new Date(slot.endzeit),
+            fruehsterEinsteckzeitpunkt: new Date(slot.fruehsterEinsteckzeitpunkt),
+            spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt)
           } as Slot)) as Slot[]
         )
       );
   }
 
-  postBookedSlot(booking: Reservierung) {
+  postBookedSlot(booking: Reservierung): Observable<SlotID> {
     const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': '*'
-      })
+      headers: new HttpHeaders()
     };
+    httpOptions.headers.set('Content-Type', 'application/json');
+    httpOptions.headers.set('Access-Control-Allow-Origin', '*');
     //TODO : mitarbeiterId ueber Token loesen
-    const test = this.http.post<SlotID>(this.rootUrl+'/rest/slot', booking, httpOptions).subscribe((data) => console.log(data));
-    console.log(test);
-    return test;
+    return this.http.post<SlotID>(this.rootUrl + '/rest/slot', booking, httpOptions);
   }
 }
