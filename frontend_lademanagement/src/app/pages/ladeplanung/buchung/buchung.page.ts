@@ -73,6 +73,7 @@ export class BuchungPage implements OnInit {
       startzeit: this.reservierungForm.getRawValue().startzeit.toString(),
       endzeit: this.reservierungForm.getRawValue().endzeit.toString(),
     };
+    console.log("Reservierung erstellen.");
     this.slotplanungService.postBookedSlot(reservierung);
     await this.modalctrl.dismiss();
   }

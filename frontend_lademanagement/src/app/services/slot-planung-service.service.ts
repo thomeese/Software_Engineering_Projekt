@@ -8,7 +8,7 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SlotPlanungServiceService {
-  readonly rootUrl = 'http://192.168.2.6:8080/backend_war_exploded';
+  readonly rootUrl = 'http://localhost:8080/backend_war'; //http://192.168.2.6:8080/backend_war_exploded
   constructor(private http: HttpClient){}
 
   /**
@@ -18,10 +18,10 @@ export class SlotPlanungServiceService {
     return this.http.get<SlotJSON[]>(this.rootUrl+'/rest/slot')
       .pipe(
         map((results: SlotJSON[]) => results.map((slot: SlotJSON) => ({
-          startzeit: new Date(slot.startzeit * 1000),
-          endzeit: new Date(slot.endzeit * 1000),
-          fruehsterEinsteckzeitpunkt: new Date(slot.fruehsterEinsteckzeitpunkt * 1000),
-          spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt * 1000)
+          startzeit: new Date(slot.startzeit),
+          endzeit: new Date(slot.endzeit),
+          fruehsterEinsteckzeitpunkt: new Date(slot.fruehsterEinsteckzeitpunkt),
+          spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt)
           } as Slot)) as Slot[]
         )
       );
@@ -35,24 +35,25 @@ export class SlotPlanungServiceService {
     return this.http.get<SlotJSON[]>(this.rootUrl+'/rest/slot?frei=1')
       .pipe(
         map((results: SlotJSON[]) => results.map((slot: SlotJSON) => ({
-          startzeit: new Date(slot.startzeit * 1000),
-          endzeit: new Date(slot.endzeit * 1000),
-          fruehsterEinsteckzeitpunkt: new Date(slot.fruehsterEinsteckzeitpunkt * 1000),
-          spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt * 1000)
+          startzeit: new Date(slot.startzeit),
+          endzeit: new Date(slot.endzeit),
+          fruehsterEinsteckzeitpunkt: new Date(slot.fruehsterEinsteckzeitpunkt),
+          spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt)
           } as Slot)) as Slot[]
         )
       );
   }
 
   postBookedSlot(booking: Reservierung) {
-    const header = new HttpHeaders();
-    header.set('Content-Type', 'application/json');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
     //TODO : mitarbeiterId ueber Token loesen
-    const httpParams = new HttpParams();
-    httpParams.set('mitarbeiterID', booking.mitarbeiterID);
-    httpParams.set('startzeit', booking.startzeit);
-    httpParams.set('endzeit', booking.endzeit);
-
-    return this.http.post<SlotID>(this.rootUrl+'/rest/planung', {headers: header, params: httpParams});
+    const test = this.http.post<SlotID>(this.rootUrl+'/rest/slot', booking, httpOptions).subscribe((data) => console.log(data));
+    console.log(test);
+    return test;
   }
 }
