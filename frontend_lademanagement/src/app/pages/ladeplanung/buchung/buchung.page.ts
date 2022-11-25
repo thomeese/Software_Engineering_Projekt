@@ -71,8 +71,8 @@ export class BuchungPage implements OnInit {
       //TODO: MitarbeiterID hartegecoded muesste noch angepasst werden, wenn Login umgesetzt wird
       mitarbeiterID: '1',
       //Z aus DateString entfernen, da es sonst dem ISO 8601 entspricht
-      startzeit: this.reservierungForm.getRawValue().startzeit.toString().replace('Z', ''),
-      endzeit: this.reservierungForm.getRawValue().endzeit.toString().replace('Z', ''),
+      startzeit: this.reservierungForm.getRawValue().startzeit.toString().replace('Z', '').split('+')[0], //TODO: schoenere anpassung bezueglich ISO 8601 entsprechen
+      endzeit: this.reservierungForm.getRawValue().endzeit.toString().replace('Z', '').split('+')[0],
     };
     console.log('Reservierung erstellen.');
     this.slotplanungService.postBookedSlot(reservierung).subscribe(slotID => {
