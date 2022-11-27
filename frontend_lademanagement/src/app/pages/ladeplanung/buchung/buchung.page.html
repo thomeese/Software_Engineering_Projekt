@@ -1,9 +1,38 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>buchung</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-card class="outerCard">
+    <ion-card-header class="mainHeader">Slot Reservierung</ion-card-header>
+  <ion-card class="innerCard">
+    <ion-card-header class="subHeader">{{this.formateDate()}}</ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="this.reservierungForm" (submit)="this.reservierungBuchen()">
+        <ion-item>
+          <ion-label>Startzeit:</ion-label>
+          <ion-datetime-button displayformat="HH:mm" datetime="starttime"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime id="starttime"
+                            presentation="time"
+                            formControlName="startzeit">
+              </ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+        <ion-item>
+          <ion-label>Endzeit:</ion-label>
+          <ion-datetime-button displayformat="HH:mm" datetime="endtime"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime id="endtime"
+                            presentation="time"
+                            formControlName="endzeit"
+              >
+              </ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+        <ion-button class="submitButton" type="submit" [disabled]="reservierungForm.invalid">Slot buchen</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-card>
 
-<ion-content>
-
-</ion-content>
+<ion-button class="closeButton" color="danger" shape="round" size = "small" (click)="this.closeModal()"><ion-icon name="close-circle-outline" ></ion-icon></ion-button>
