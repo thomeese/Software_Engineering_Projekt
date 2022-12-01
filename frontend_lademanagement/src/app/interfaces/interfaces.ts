@@ -27,6 +27,11 @@ export interface Zeitslot{
   startzeit: Date;
   endzeit: Date;
 }
+
+export interface ZeitslotDTO{
+  startzeit: number;
+  endzeit: number;
+}
 export interface Slot {
   startzeit: Date;
   endzeit: Date;

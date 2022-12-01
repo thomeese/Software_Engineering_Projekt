@@ -206,6 +206,7 @@ export class LadeplanungPage implements OnInit {
       const data = await this.slotplanungService.getOwnSlots().toPromise();
         const asyncEvents: CalendarEvent[] = [];
         for (const slot of data) {
+          console.log(slot);
           this.ownSlots.push(slot);
           asyncEvents.push({
             start: slot.slot.startzeit,

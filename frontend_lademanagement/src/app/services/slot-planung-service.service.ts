@@ -15,9 +15,9 @@ export class SlotPlanungServiceService {
    * Holt alle eigenen gebuchten Slots von dem Backend und formatiert diese als eine Liste von Slots zurueck.
    */
   getOwnSlots(): Observable<Reservierung[]> {
-    return this.http.get<Reservierung[]>(this.rootUrl + '/rest/reservierung')
+    return this.http.get<ReservierungDTO[]>(this.rootUrl + '/rest/reservierung')
       .pipe(
-        map((results: Reservierung[]) => results.map((data: Reservierung) => ({
+        map((results: ReservierungDTO[]) => results.map((data: ReservierungDTO) => ({
             name: data.name,
             fruehsterEinsteckzeitpunkt: new Date(data.fruehsterEinsteckzeitpunkt),
             spaetesterAbsteckzeitpunkt: new Date(data.spaetesterAbsteckzeitpunkt),
