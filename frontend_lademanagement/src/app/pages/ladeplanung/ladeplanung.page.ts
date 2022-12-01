@@ -157,7 +157,6 @@ export class LadeplanungPage implements OnInit {
       //Freien eigene Buchung angeklickt Detailansicht starten
       for(const data of this.ownSlots){
         if(data.slot.startzeit === event.start && data.slot.endzeit === event.end){
-          console.log(data);
           this.openDetailModal(data);
         }
       }
@@ -206,7 +205,6 @@ export class LadeplanungPage implements OnInit {
       const data = await this.slotplanungService.getOwnSlots().toPromise();
         const asyncEvents: CalendarEvent[] = [];
         for (const slot of data) {
-          console.log(slot);
           this.ownSlots.push(slot);
           asyncEvents.push({
             start: slot.slot.startzeit,
