@@ -8,6 +8,9 @@ import {format} from 'date-fns';
   templateUrl: './detail-info.component.html',
   styleUrls: ['./detail-info.component.scss'],
 })
+/**
+ * @author Thomas Meese
+ */
 export class DetailInfoComponent implements OnInit {
   @Input() reservierung: Reservierung;
 
@@ -25,6 +28,7 @@ export class DetailInfoComponent implements OnInit {
   }
 
   /**
+   * Formatiert die Uhrzeit des uebergebenen Datums im Format HH:mm
    *
    * @param date zu formatierendes Datum
    */

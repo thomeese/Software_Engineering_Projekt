@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Reservierung, Slot, SlotID, SlotJSON, Zeitslot} from '../interfaces/interfaces';
+import {Reservierung, ReservierungDTO, Slot, SlotID, SlotJSON, Zeitslot} from '../interfaces/interfaces';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -73,7 +73,6 @@ export class SlotPlanungServiceService {
     };
     httpOptions.headers.set('Content-Type', 'application/json');
     httpOptions.headers.set('Access-Control-Allow-Origin', '*');
-    //TODO : mitarbeiterId ueber Token loesen
     return this.http.post<SlotID>(this.rootUrl + '/rest/slot', booking, httpOptions);
   }
 }

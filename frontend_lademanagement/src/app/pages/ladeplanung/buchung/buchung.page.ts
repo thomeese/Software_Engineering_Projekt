@@ -10,6 +10,9 @@ import {Zeitslot} from '../../../interfaces/interfaces';
   templateUrl: './buchung.page.html',
   styleUrls: ['./buchung.page.scss'],
 })
+/**
+ * @author Thomas Meese
+ */
 export class BuchungPage implements OnInit {
   @Input() startDate: Date; // zu reservierender Tag
   @Input() endDate: Date; // zu reservierender Tag

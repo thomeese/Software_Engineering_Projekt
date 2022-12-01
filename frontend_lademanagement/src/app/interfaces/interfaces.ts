@@ -10,16 +10,17 @@ export interface SlotID {
   slotID: number;
 }
 
+export interface ReservierungDTO{
+  name: string;
+  fruehsterEinsteckzeitpunkt: number;
+  spaetesterAbsteckzeitpunkt: number;
+  slot: ZeitslotDTO;
+}
 export interface Reservierung{
   name: string;
   fruehsterEinsteckzeitpunkt: Date;
   spaetesterAbsteckzeitpunkt: Date;
   slot: Zeitslot;
-}
-export interface ReservierungOld {
-  mitarbeiterID: string;
-  startzeit: string;
-  endzeit: string;
 }
 
 export interface Zeitslot{
