@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Reservierung, ReservierungDTO, Slot, SlotID, SlotJSON, Zeitslot} from '../interfaces/interfaces';
+import {Reservierung, Slot, SlotID, SlotJSON, Zeitslot} from '../interfaces/interfaces';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -15,9 +15,9 @@ export class SlotPlanungServiceService {
    * Holt alle eigenen gebuchten Slots von dem Backend und formatiert diese als eine Liste von Slots zurueck.
    */
   getOwnSlots(): Observable<Reservierung[]> {
-    return this.http.get<ReservierungDTO[]>(this.rootUrl + '/rest/reservierung')
+    return this.http.get<Reservierung[]>(this.rootUrl + '/rest/reservierung')
       .pipe(
-        map((results: ReservierungDTO[]) => results.map((data: ReservierungDTO) => ({
+        map((results: Reservierung[]) => results.map((data: Reservierung) => ({
             name: data.name,
             fruehesterEinsteckzeitpunkt: new Date(data.fruehesterEinsteckzeitpunkt),
             spaetesterAussteckzeitpunkt: new Date(data.spaetesterAussteckzeitpunkt),
@@ -25,7 +25,7 @@ export class SlotPlanungServiceService {
               startzeit: new Date(data.slot.startzeit),
               endzeit: new Date(data.slot.endzeit),
             }
-          } as Reservierung)) as Reservierung[]
+          }))
         )
       );
   }
