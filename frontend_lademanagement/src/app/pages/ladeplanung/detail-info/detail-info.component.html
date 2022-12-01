@@ -17,13 +17,13 @@
       Frühester Einsteckzeitpunkt
     </ion-card-subtitle>
     <ion-card-content>
-      {{this.formatTime(this.reservierung.fruehsterEinsteckzeitpunkt)}} Uhr
+      {{this.formatTime(this.reservierung.fruehesterEinsteckzeitpunkt)}} Uhr
     </ion-card-content>
     <ion-card-subtitle>
       Spätester Absteckzeitpunkt
     </ion-card-subtitle>
     <ion-card-content>
-      {{this.formatTime(this.reservierung.spaetesterAbsteckzeitpunkt)}} Uhr
+      {{this.formatTime(this.reservierung.spaetesterAussteckzeitpunkt)}} Uhr
     </ion-card-content>
   </ion-card>
   <ion-button class="submitButton" color="success" (click)="this.closeModal()">

@@ -1,7 +1,7 @@
 export interface SlotJSON {
   startzeit: number;
   endzeit: number;
-  fruehsterEinsteckzeitpunkt: number;
+  fruehesterEinsteckzeitpunkt: number;
   spaetesterAbsteckzeitpunkt: number;
 }
 
@@ -12,14 +12,14 @@ export interface SlotID {
 
 export interface ReservierungDTO{
   name: string;
-  fruehsterEinsteckzeitpunkt: number;
-  spaetesterAbsteckzeitpunkt: number;
+  fruehesterEinsteckzeitpunkt: number;
+  spaetesterAussteckzeitpunkt: number;
   slot: ZeitslotDTO;
 }
 export interface Reservierung{
   name: string;
-  fruehsterEinsteckzeitpunkt: Date;
-  spaetesterAbsteckzeitpunkt: Date;
+  fruehesterEinsteckzeitpunkt: Date;
+  spaetesterAussteckzeitpunkt: Date;
   slot: Zeitslot;
 }
 
@@ -35,6 +35,6 @@ export interface ZeitslotDTO{
 export interface Slot {
   startzeit: Date;
   endzeit: Date;
-  fruehsterEinsteckzeitpunkt: Date;
+  fruehesterEinsteckzeitpunkt: Date;
   spaetesterAbsteckzeitpunkt: Date;
 }

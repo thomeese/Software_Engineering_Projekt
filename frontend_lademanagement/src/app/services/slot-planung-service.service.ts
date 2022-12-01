@@ -19,8 +19,8 @@ export class SlotPlanungServiceService {
       .pipe(
         map((results: ReservierungDTO[]) => results.map((data: ReservierungDTO) => ({
             name: data.name,
-            fruehsterEinsteckzeitpunkt: new Date(data.fruehsterEinsteckzeitpunkt),
-            spaetesterAbsteckzeitpunkt: new Date(data.spaetesterAbsteckzeitpunkt),
+            fruehesterEinsteckzeitpunkt: new Date(data.fruehesterEinsteckzeitpunkt),
+            spaetesterAussteckzeitpunkt: new Date(data.spaetesterAussteckzeitpunkt),
             slot: {
               startzeit: new Date(data.slot.startzeit),
               endzeit: new Date(data.slot.endzeit),
@@ -38,7 +38,7 @@ export class SlotPlanungServiceService {
         map((results: SlotJSON[]) => results.map((slot: SlotJSON) => ({
             startzeit: new Date(slot.startzeit),
             endzeit: new Date(slot.endzeit),
-            fruehsterEinsteckzeitpunkt: new Date(slot.fruehsterEinsteckzeitpunkt),
+            fruehesterEinsteckzeitpunkt: new Date(slot.fruehesterEinsteckzeitpunkt),
             spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt)
           } as Slot)) as Slot[]
         )
@@ -55,7 +55,7 @@ export class SlotPlanungServiceService {
         map((results: SlotJSON[]) => results.map((slot: SlotJSON) => ({
             startzeit: new Date(slot.startzeit),
             endzeit: new Date(slot.endzeit),
-            fruehsterEinsteckzeitpunkt: new Date(slot.fruehsterEinsteckzeitpunkt),
+            fruehesterEinsteckzeitpunkt: new Date(slot.fruehesterEinsteckzeitpunkt),
             spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt)
           } as Slot)) as Slot[]
         )
