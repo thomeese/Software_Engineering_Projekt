@@ -1,0 +1,35 @@
+<ion-card class="outerCard">
+  <ion-card-header>Meine Reservierung vom {{this.formateDate()}}</ion-card-header>
+  <ion-card class="innerCard">
+    <ion-card-subtitle>
+      Ladestation
+    </ion-card-subtitle>
+    <ion-card-content>
+      {{this.reservierung.name}}
+    </ion-card-content>
+    <ion-card-subtitle>
+     Ladezeitraum
+    </ion-card-subtitle>
+    <ion-card-content>
+      {{this.formatTime(this.reservierung.slot.startzeit)}} Uhr - {{this.formatTime(this.reservierung.slot.endzeit)}} Uhr
+    </ion-card-content>
+    <ion-card-subtitle>
+      Frühester Einsteckzeitpunkt
+    </ion-card-subtitle>
+    <ion-card-content>
+      {{this.reservierung.fruehsterEinsteckzeitpunkt}} Uhr
+    </ion-card-content>
+    <ion-card-subtitle>
+      Spätester Absteckzeitpunkt
+    </ion-card-subtitle>
+    <ion-card-content>
+      {{this.formatTime(this.reservierung.spaetesterAbsteckzeitpunkt)}} Uhr
+    </ion-card-content>
+  </ion-card>
+  <ion-button class="submitButton" color="success" (click)="this.closeModal()">
+    Reservierung stornieren
+  </ion-button>
+  <ion-button class="closeButton" color="danger" shape="round" size="small" (click)="this.closeModal()">
+    <ion-icon name="close-circle-outline"></ion-icon>
+  </ion-button>
+</ion-card>

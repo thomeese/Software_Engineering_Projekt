@@ -1,21 +1,38 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Reservierung, Slot, SlotID, SlotJSON} from '../interfaces/interfaces';
+import {Reservierung, Slot, SlotID, SlotJSON, Zeitslot} from '../interfaces/interfaces';
 import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SlotPlanungServiceService {
-  readonly rootUrl = 'http://192.168.137.1:8080/backend_war_exploded'; //http://192.168.2.6:8080/backend_war_exploded
+  readonly rootUrl = 'http://localhost:8080/backend_war'; //http://192.168.2.6:8080/backend_war_exploded
   constructor(private http: HttpClient) {
   }
-
   /**
    * Holt alle eigenen gebuchten Slots von dem Backend und formatiert diese als eine Liste von Slots zurueck.
    */
-  getOwnSlots(): Observable<Slot[]> {
+  getOwnSlots(): Observable<Reservierung[]> {
+    return this.http.get<Reservierung[]>(this.rootUrl + '/rest/reservierung')
+      .pipe(
+        map((results: Reservierung[]) => results.map((data: Reservierung) => ({
+            name: data.name,
+            fruehsterEinsteckzeitpunkt: new Date(data.fruehsterEinsteckzeitpunkt),
+            spaetesterAbsteckzeitpunkt: new Date(data.spaetesterAbsteckzeitpunkt),
+            slot: {
+              startzeit: new Date(data.slot.startzeit),
+              endzeit: new Date(data.slot.endzeit),
+            }
+          } as Reservierung)) as Reservierung[]
+        )
+      );
+  }
+  /**
+   * Holt alle eigenen gebuchten Slots von dem Backend und formatiert diese als eine Liste von Slots zurueck.
+   */
+  getOwnSlotsold(): Observable<Slot[]> {
     return this.http.get<SlotJSON[]>(this.rootUrl + '/rest/slot')
       .pipe(
         map((results: SlotJSON[]) => results.map((slot: SlotJSON) => ({
@@ -50,7 +67,7 @@ export class SlotPlanungServiceService {
    *
    * @param booking zu sendende Reservierung
    */
-  postBookedSlot(booking: Reservierung): Observable<SlotID> {
+  postBookedSlot(booking: Zeitslot): Observable<SlotID> {
     const httpOptions = {
       headers: new HttpHeaders()
     };
