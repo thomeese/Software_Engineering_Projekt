@@ -29,21 +29,6 @@ export class SlotPlanungServiceService {
         )
       );
   }
-  /**
-   * Holt alle eigenen gebuchten Slots von dem Backend und formatiert diese als eine Liste von Slots zurueck.
-   */
-  getOwnSlotsold(): Observable<Slot[]> {
-    return this.http.get<SlotJSON[]>(this.rootUrl + '/rest/slot')
-      .pipe(
-        map((results: SlotJSON[]) => results.map((slot: SlotJSON) => ({
-            startzeit: new Date(slot.startzeit),
-            endzeit: new Date(slot.endzeit),
-            fruehesterEinsteckzeitpunkt: new Date(slot.fruehesterEinsteckzeitpunkt),
-            spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt)
-          } as Slot)) as Slot[]
-        )
-      );
-  }
 
   /**
    * Holt alle freien Slots von dem Backend und formatiert diese als eine Liste von Slots zurueck.
