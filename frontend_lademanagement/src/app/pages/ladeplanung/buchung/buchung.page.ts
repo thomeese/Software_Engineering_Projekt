@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@ang
 import {ModalController} from '@ionic/angular';
 import {SlotPlanungServiceService} from '../../../services/slot-planung-service.service';
 import {format} from 'date-fns';
-import {Zeitslot} from '../../../interfaces/interfaces';
+import {Slot} from '../../../interfaces/interfaces';
 
 @Component({
   selector: 'app-buchung',
@@ -70,7 +70,7 @@ export class BuchungPage implements OnInit {
    * Service SlotplanungService verwendet.
    */
   async reservierungBuchen() {
-    const reservierung: Zeitslot = {
+    const reservierung: Slot = {
       //Z aus DateString entfernen, da es sonst dem ISO 8601 entspricht
       // eslint-disable-next-line max-len
       startzeit: this.reservierungForm.getRawValue().startzeit.toString().replace('Z', '').split('+')[0], //TODO: schoenere anpassung bezueglich ISO 8601 entsprechen

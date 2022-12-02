@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Reservierung, Slot, SlotID, SlotJSON, Zeitslot} from '../interfaces/interfaces';
+import {Reservierung, Slot, SlotID} from '../interfaces/interfaces';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -35,14 +35,12 @@ export class SlotPlanungServiceService {
    */
   getFreeSlots(): Observable<Slot[]> {
     //TODO: eventuell wird hier der falsche Typ erwartet muesste es nicht eine Reservierung sein
-    return this.http.get<SlotJSON[]>(this.rootUrl + '/rest/slot?frei=1')
+    return this.http.get<Slot[]>(this.rootUrl + '/rest/slot?frei=1')
       .pipe(
-        map((results: SlotJSON[]) => results.map((slot: SlotJSON) => ({
+        map((results: Slot[]) => results.map((slot: Slot) => ({
             startzeit: new Date(slot.startzeit),
             endzeit: new Date(slot.endzeit),
-            fruehesterEinsteckzeitpunkt: new Date(slot.fruehesterEinsteckzeitpunkt),
-            spaetesterAbsteckzeitpunkt: new Date(slot.spaetesterAbsteckzeitpunkt)
-          } as Slot)) as Slot[]
+          }))
         )
       );
   }
@@ -52,7 +50,7 @@ export class SlotPlanungServiceService {
    *
    * @param booking zu sendende Reservierung
    */
-  postBookedSlot(booking: Zeitslot): Observable<SlotID> {
+  postBookedSlot(booking: Slot): Observable<SlotID> {
     const httpOptions = {
       headers: new HttpHeaders()
     };
