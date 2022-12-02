@@ -38,7 +38,7 @@ export class LadeplanungPage implements OnInit {
   //Bestimmt ob, die Buttons fuer die Anzeige der naechsten/vorherigen Tage der Wochenspannweite angezeigt werden
   showButtons = false;
 
-  ownSlots: Reservierung[] = [];
+  ownReservierungen: Reservierung[] = [];
   freeSlots: Slot[] = [];
 
   //Haelt die Kalendereintraege, welche angezeigt werden sollen
@@ -154,15 +154,15 @@ export class LadeplanungPage implements OnInit {
   //wird beim Anklicken eines Kalendereintrags ausgefuehrt
   handleEvent(action: string, event: CalendarEvent): void {
     if (event.title === 'Meine Buchung') {
-      //Freien eigene Buchung angeklickt Detailansicht starten
-      for(const data of this.ownSlots){
+      //eigene Buchung angeklickt, passende Reservierung suchen
+      for(const data of this.ownReservierungen){
         if(data.slot.startzeit === event.start && data.slot.endzeit === event.end){
+          //Detailansicht starten
           this.openDetailModal(data);
         }
       }
-      //Meine Buchung bearbeiten
     } else if (event.title === 'Frei') {
-      //Freien Slot angeklickt Bchung starten
+      //Freien Slot angeklickt Buchung starten
       this.openBookSlotModal(event.start, event.end);
     }
   }
@@ -202,13 +202,13 @@ export class LadeplanungPage implements OnInit {
    * @return gibt die Kalendereintrage zurueck.
    */
   async holeEigeneReservierungen(): Promise<CalendarEvent[]> {
-      const data = await this.slotplanungService.getOwnSlots().toPromise();
+      const data = await this.slotplanungService.getOwnReservierungen().toPromise();
         const asyncEvents: CalendarEvent[] = [];
-        for (const slot of data) {
-          this.ownSlots.push(slot);
+        for (const reservierung of data) {
+          this.ownReservierungen.push(reservierung);
           asyncEvents.push({
-            start: slot.slot.startzeit,
-            end: slot.slot.endzeit,
+            start: reservierung.slot.startzeit,
+            end: reservierung.slot.endzeit,
             title: 'Meine Buchung',
             color: {
               primary: 'yellow',
