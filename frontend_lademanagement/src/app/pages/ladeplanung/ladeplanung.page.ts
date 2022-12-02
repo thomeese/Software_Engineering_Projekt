@@ -10,9 +10,10 @@ import {takeUntil} from 'rxjs/operators';
 import {LoadingController, ModalController} from '@ionic/angular';
 import {BuchungPage} from './buchung/buchung.page';
 import {SlotPlanungServiceService} from 'src/app/services/slot-planung-service.service';
-import {Slot} from '../../interfaces/interfaces';
+import {Reservierung, Slot} from '../../interfaces/interfaces';
 import { registerLocaleData } from '@angular/common';
 import localeDE from '@angular/common/locales/de';
+import {DetailInfoComponent} from './detail-info/detail-info.component';
 
 registerLocaleData(localeDE);
 
@@ -37,7 +38,7 @@ export class LadeplanungPage implements OnInit {
   //Bestimmt ob, die Buttons fuer die Anzeige der naechsten/vorherigen Tage der Wochenspannweite angezeigt werden
   showButtons = false;
 
-  ownSlots: Slot[] = [];
+  ownReservierungen: Reservierung[] = [];
   freeSlots: Slot[] = [];
 
   //Haelt die Kalendereintraege, welche angezeigt werden sollen
@@ -125,6 +126,17 @@ export class LadeplanungPage implements OnInit {
     }
   }
 
+  async openDetailModal(reservierung: Reservierung){
+    const modal = await this.modalCtrl.create({
+      component: DetailInfoComponent,
+      componentProps: {
+        reservierung
+      },
+      backdropDismiss: true
+    });
+
+    await modal.present();
+  }
   async openBookSlotModal(startDate: Date, endDate: Date) {
     const modal = await this.modalCtrl.create({
       component: BuchungPage,
@@ -142,9 +154,15 @@ export class LadeplanungPage implements OnInit {
   //wird beim Anklicken eines Kalendereintrags ausgefuehrt
   handleEvent(action: string, event: CalendarEvent): void {
     if (event.title === 'Meine Buchung') {
-      //Meine Buchung bearbeiten
+      //eigene Buchung angeklickt, passende Reservierung suchen
+      for(const data of this.ownReservierungen){
+        if(data.slot.startzeit === event.start && data.slot.endzeit === event.end){
+          //Detailansicht starten
+          this.openDetailModal(data);
+        }
+      }
     } else if (event.title === 'Frei') {
-      //Freien Slot angeklickt Bchung starten
+      //Freien Slot angeklickt Buchung starten
       this.openBookSlotModal(event.start, event.end);
     }
   }
@@ -184,13 +202,13 @@ export class LadeplanungPage implements OnInit {
    * @return gibt die Kalendereintrage zurueck.
    */
   async holeEigeneReservierungen(): Promise<CalendarEvent[]> {
-      const data = await this.slotplanungService.getOwnSlots().toPromise();
+      const data = await this.slotplanungService.getOwnReservierungen().toPromise();
         const asyncEvents: CalendarEvent[] = [];
-        for (const slot of data) {
-          this.ownSlots.push(slot);
+        for (const reservierung of data) {
+          this.ownReservierungen.push(reservierung);
           asyncEvents.push({
-            start: slot.startzeit,
-            end: slot.endzeit,
+            start: reservierung.slot.startzeit,
+            end: reservierung.slot.endzeit,
             title: 'Meine Buchung',
             color: {
               primary: 'yellow',

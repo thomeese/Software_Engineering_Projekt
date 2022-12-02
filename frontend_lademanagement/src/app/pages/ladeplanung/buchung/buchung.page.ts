@@ -3,13 +3,16 @@ import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@ang
 import {ModalController} from '@ionic/angular';
 import {SlotPlanungServiceService} from '../../../services/slot-planung-service.service';
 import {format} from 'date-fns';
-import {Reservierung} from '../../../interfaces/interfaces';
+import {Slot} from '../../../interfaces/interfaces';
 
 @Component({
   selector: 'app-buchung',
   templateUrl: './buchung.page.html',
   styleUrls: ['./buchung.page.scss'],
 })
+/**
+ * @author Thomas Meese
+ */
 export class BuchungPage implements OnInit {
   @Input() startDate: Date; // zu reservierender Tag
   @Input() endDate: Date; // zu reservierender Tag
@@ -67,10 +70,9 @@ export class BuchungPage implements OnInit {
    * Service SlotplanungService verwendet.
    */
   async reservierungBuchen() {
-    const reservierung: Reservierung = {
-      //TODO: MitarbeiterID hartegecoded muesste noch angepasst werden, wenn Login umgesetzt wird
-      mitarbeiterID: '1',
+    const reservierung: Slot = {
       //Z aus DateString entfernen, da es sonst dem ISO 8601 entspricht
+      // eslint-disable-next-line max-len
       startzeit: this.reservierungForm.getRawValue().startzeit.toString().replace('Z', '').split('+')[0], //TODO: schoenere anpassung bezueglich ISO 8601 entsprechen
       endzeit: this.reservierungForm.getRawValue().endzeit.toString().replace('Z', '').split('+')[0],
     };

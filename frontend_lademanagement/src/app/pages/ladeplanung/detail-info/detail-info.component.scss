@@ -1,0 +1,47 @@
+
+.outerCard {
+  border-radius: 10px;
+  --background: lightgray;
+
+
+}
+.closeButton{
+  position: absolute;
+  top: 5px;
+  right: 7px;
+  padding: 5px;
+  height: 50px;
+  --border-radius: 50%;
+}
+.submitButton {
+  --align-content: center;
+  --position: absolute;
+  --border-radius: 10px;
+  --background: lightgreen;
+  --color: black;
+  display: flex;
+}
+.innerCard {
+  margin: 10px 10px 20px 10px;
+  border-radius: 10px;
+  background: rgb(128, 128, 128);
+  --color: white;
+  ion-card-subtitle{
+    margin-top: 2px;
+    margin-left: 10px;
+    font-weight: bold;
+    --color: white;
+  }
+}
+
+.mainHeader {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.subHeader {
+  font-weight: bold;
+  --color: white;
+}
+
