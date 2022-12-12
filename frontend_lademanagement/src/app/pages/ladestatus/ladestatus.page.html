@@ -8,18 +8,29 @@
 </ion-header>
 
 <ion-content>
-  <section class="battery">
-      <div class="battery-card">
-        <div class="battery-text">
-          <h1>Akkustand</h1>
-          <p class = battery-percentage>100%</p>
-        </div>
-        <div class="outer-battery">
-          <div class="battery-level">
-            <div class="battery-fluid" [style.height]="this.percentage+'%'" [style.background]="this.batteryFluidColor"></div>
+    <ion-card class="main-card">
+      <ion-card-header class="main-header">
+        Ihr Fahrzeug wird geladen
+      </ion-card-header>
+      <ion-card class="card-bottom-right">
+        <ion-card-header class="sub-header"> Verbleibende Ladezeit im Slot</ion-card-header>
+        <ion-card-content> 1h</ion-card-content>
+        <ion-card-header class="sub-header"> Verbleibende Ladezeit, bis das Fahrzeug voll ist</ion-card-header>
+        <ion-card-content> 1h</ion-card-content>
+      </ion-card>
+      <section class="battery">
+        <div class="battery-card">
+          <div class="battery-text">
+            <h1>Akkustand</h1>
+            <p class=battery-percentage>100%</p>
+          </div>
+          <div class="outer-battery">
+            <div class="battery-level">
+              <div class="battery-fluid" [style.height]="this.percentage+'%'"
+                   [style.background]="this.batteryFluidColor"></div>
+            </div>
           </div>
         </div>
-      </div>
-  </section>
-
+      </section>
+    </ion-card>
 </ion-content>
