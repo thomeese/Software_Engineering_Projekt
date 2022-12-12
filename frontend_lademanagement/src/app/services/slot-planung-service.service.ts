@@ -8,7 +8,7 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SlotPlanungServiceService {
-  readonly rootUrl = 'http://localhost:8080/backend_war'; //http://192.168.2.6:8080/backend_war_exploded
+  readonly rootUrl = 'http://192.168.137.1:8080/backend_war_exploded'; // http://localhost:8080/backend_war
   constructor(private http: HttpClient) {
   }
   /**

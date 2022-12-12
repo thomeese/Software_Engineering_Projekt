@@ -9,7 +9,11 @@ const routes: Routes = [
   }, {
     path: 'ladeplanung',
     loadChildren: () => import('./pages/ladeplanung/ladeplanung.module').then(m => m.LadeplanungPageModule)
+  },  {
+    path: 'ladestatus',
+    loadChildren: () => import('./pages/ladestatus/ladestatus.module').then( m => m.LadestatusPageModule)
   }
+
 ];
 
 @NgModule({
