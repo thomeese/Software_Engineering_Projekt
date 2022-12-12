@@ -12,10 +12,12 @@
       <div class="battery-card">
         <div class="battery-text">
           <h1>Akkustand</h1>
-          <p>100%</p>
+          <p class = battery-percentage>100%</p>
         </div>
         <div class="outer-battery">
-          <div class="battery-level"></div>
+          <div class="battery-level">
+            <div class="battery-fluid" [style.height]="this.percentage+'%'" [style.background]="this.batteryFluidColor"></div>
+          </div>
         </div>
       </div>
   </section>
