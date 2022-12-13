@@ -14,3 +14,9 @@ export interface Slot {
   startzeit: Date;
   endzeit: Date;
 }
+
+export interface Ladestatus{
+  ladestand: number;
+  geladeneEnergie: number;
+  ladedauer: Date;
+}

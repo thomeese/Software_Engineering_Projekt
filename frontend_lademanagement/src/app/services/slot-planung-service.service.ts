@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Reservierung, Slot, SlotID} from '../interfaces/interfaces';
+import {Ladestatus, Reservierung, Slot, SlotID} from '../interfaces/interfaces';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -11,6 +11,7 @@ export class SlotPlanungServiceService {
   readonly rootUrl = 'http://192.168.137.1:8080/backend_war_exploded'; // http://localhost:8080/backend_war
   constructor(private http: HttpClient) {
   }
+
   /**
    * Holt alle eigenen gebuchten Slots von dem Backend und formatiert diese als eine Liste von Slots zurueck.
    */
@@ -46,6 +47,13 @@ export class SlotPlanungServiceService {
   }
 
   /**
+   * Holt den Ladestatus des Fahrzeugs vom Backend.
+   */
+  getLadestatus(): Observable<Ladestatus> {
+    return this.http.get<Ladestatus>(this.rootUrl + 'rest/status');
+  }
+
+  /**
    * Sendet die benoetigten Dtane fuer eine Reservierung an das Beckend.
    *
    * @param booking zu sendende Reservierung
@@ -58,4 +66,5 @@ export class SlotPlanungServiceService {
     httpOptions.headers.set('Access-Control-Allow-Origin', '*');
     return this.http.post<SlotID>(this.rootUrl + '/rest/slot', booking, httpOptions);
   }
+
 }

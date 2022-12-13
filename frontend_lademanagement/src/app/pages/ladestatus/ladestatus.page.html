@@ -12,7 +12,19 @@
       <ion-card-header class="main-header">
         Ihr Fahrzeug wird geladen
       </ion-card-header>
-      <ion-card class="card-bottom-right">
+      <ion-card-subtitle>
+        Bisher geladene Leistung
+      </ion-card-subtitle>
+      <ion-card-content>
+        {{this.ladestatus.geladeneEnergie}}kw
+      </ion-card-content>
+      <ion-card class="card-bottom-right" *ngIf="fullscreen">
+        <ion-card-header class="sub-header"> Verbleibende Ladezeit im Slot</ion-card-header>
+        <ion-card-content> 1h</ion-card-content>
+        <ion-card-header class="sub-header"> Verbleibende Ladezeit, bis das Fahrzeug voll ist</ion-card-header>
+        <ion-card-content> 1h</ion-card-content>
+      </ion-card>
+      <ion-card class="card-small-screen" *ngIf="smallscreen">
         <ion-card-header class="sub-header"> Verbleibende Ladezeit im Slot</ion-card-header>
         <ion-card-content> 1h</ion-card-content>
         <ion-card-header class="sub-header"> Verbleibende Ladezeit, bis das Fahrzeug voll ist</ion-card-header>
@@ -22,11 +34,11 @@
         <div class="battery-card">
           <div class="battery-text">
             <h1>Akkustand</h1>
-            <p class=battery-percentage>100%</p>
+            <p class=battery-percentage>{{this.ladestatus.ladestand}}%</p>
           </div>
           <div class="outer-battery">
             <div class="battery-level">
-              <div class="battery-fluid" [style.height]="this.percentage+'%'"
+              <div class="battery-fluid" [style.height]="this.ladestatus.ladestand+'%'"
                    [style.background]="this.batteryFluidColor"></div>
             </div>
           </div>
