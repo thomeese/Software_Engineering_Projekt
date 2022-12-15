@@ -8,7 +8,7 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SlotPlanungServiceService {
-  readonly rootUrl = 'http://192.168.137.1:8080/backend_war_exploded'; // http://localhost:8080/backend_war
+  readonly rootUrl = 'http://localhost:8080/backend_war'; // http://192.168.137.1:8080/backend_war_exploded
   constructor(private http: HttpClient) {
   }
 
@@ -50,7 +50,7 @@ export class SlotPlanungServiceService {
    * Holt den Ladestatus des Fahrzeugs vom Backend.
    */
   getLadestatus(): Observable<Ladestatus> {
-    return this.http.get<Ladestatus>(this.rootUrl + 'rest/status');
+    return this.http.get<Ladestatus>(this.rootUrl + '/rest/status');
   }
 
   /**
