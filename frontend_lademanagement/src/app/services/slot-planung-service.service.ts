@@ -13,7 +13,7 @@ export class SlotPlanungServiceService {
   }
 
   /**
-   * Holt alle eigenen gebuchten Slots von dem Backend und formatiert diese als eine Liste von Slots zurueck.
+   * Holt alle eigenen gebuchten Reservierungen von dem Backend und gibt diese formatiert als eine Liste von Reservierungen zurueck.
    */
   getOwnReservierungen(): Observable<Reservierung[]> {
     return this.http.get<Reservierung[]>(this.rootUrl + '/rest/reservierung')
@@ -60,7 +60,7 @@ export class SlotPlanungServiceService {
   }
 
   /**
-   * Sendet die benoetigten Dtane fuer eine Reservierung an das Beckend.
+   * Sendet die benoetigten Daten fuer eine Reservierung an das Beckend.
    *
    * @param booking zu sendende Reservierung
    */

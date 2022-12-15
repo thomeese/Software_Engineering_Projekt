@@ -99,9 +99,9 @@ export class LadestatusPage implements OnInit {
    */
   msToTime(ms: number) {
     const seconds = Number((ms / 1000).toFixed(1));
-    const minutes = Number((ms / (1000 * 60)).toFixed(1));
-    const hours = Number((ms / (1000 * 60 * 60)).toFixed(1));
-    const days = Number((ms / (1000 * 60 * 60 * 24)).toFixed(1));
+    const minutes = Number((seconds / 60).toFixed(1));
+    const hours = Number((minutes / 60).toFixed(1));
+    const days = Number((hours/24).toFixed(1));
     if (seconds < 60) {
       return seconds + ' Sekunden';
     } else if (minutes < 60) {
@@ -124,7 +124,7 @@ export class LadestatusPage implements OnInit {
       this.remainingMinutes = Number(this.ladestatus.ladedauerStundenMinuten.charAt(this.ladestatus.ladedauerStundenMinuten.indexOf('M') - 2));
     } else {
       // eslint-disable-next-line max-len
-      this.remainingMinutes = Number(this.ladestatus.ladedauerStundenMinuten.charAt(this.ladestatus.ladedauerStundenMinuten.indexOf('M') - 2));
+      this.remainingMinutes = Number(this.ladestatus.ladedauerStundenMinuten.charAt(this.ladestatus.ladedauerStundenMinuten.indexOf('M') - 1));
     }
   }
 
