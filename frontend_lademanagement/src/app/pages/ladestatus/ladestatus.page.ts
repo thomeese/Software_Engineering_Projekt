@@ -8,13 +8,12 @@ import {SlotPlanungServiceService} from '../../services/slot-planung-service.ser
   styleUrls: ['./ladestatus.page.scss'],
 })
 export class LadestatusPage implements OnInit {
-  ladestatus: Ladestatus = {
-    ladestand: Math.floor(Math.random() * 100),
-    geladeneEnergie: 100,
-    ladedauer: new Date()
-  };
+  ladestatus: Ladestatus;
 
   remainingSlottime: number;
+
+  remainingHours: number;
+  remainingMinutes: number;
   batteryFluidColor: string;
 
   isCharging = false;
@@ -44,33 +43,40 @@ export class LadestatusPage implements OnInit {
    * passt das Aussehen der Batterieflueesigkeit an.
    */
   changeBattery() {
-    if (this.ladestatus.ladestand <= 20) {
+    if (this.ladestatus.ladestandProzent <= 20) {
       this.batteryFluidColor = 'red';
-    } else if (this.ladestatus.ladestand <= 40) {
+    } else if (this.ladestatus.ladestandProzent <= 40) {
       this.batteryFluidColor = 'orange';
-    } else if (this.ladestatus.ladestand <= 80) {
+    } else if (this.ladestatus.ladestandProzent <= 80) {
       this.batteryFluidColor = 'yellow';
-    } else if (this.ladestatus.ladestand <= 100) {
+    } else if (this.ladestatus.ladestandProzent <= 100) {
       this.batteryFluidColor = 'lightgreen';
     }
   }
 
+  /**
+   * holt alle benoetigeten Daten fuer die Visualisierung auf der Seite
+   */
   async setup() {
+    //Ladestatus holen
     this.ladestatus = await this.slotplanung.getLadestatus().toPromise();
+    //falls nicht geladen wird Mock werte setzen
     if (this.ladestatus === null) {
       this.ladestatus = {
-        ladestand: 10,
-        geladeneEnergie: 0,
-        ladedauer: new Date()
+        geladeneEnergieKwH: 0,
+        ladestandProzent: 0,
+        ladedauerStundenMinuten: ''
       };
     }
-    if (this.ladestatus.ladestand === 0 && this.ladestatus.geladeneEnergie === 0) {
+    //wenn nicht geladen wird Seite anpassen
+    if (this.ladestatus.ladestandProzent === 0 && this.ladestatus.geladeneEnergieKwH === 0) {
       this.haeader = 'Kein Fahrzeug von Ihnen wird derzeit geladen';
       this.isCharging = false;
     } else {
       this.haeader = 'Ihr Fahrzeug wird geladen';
       this.isCharging = true;
     }
+    //wenn geladen wird, verbleibene Slotzeit berechenen
     if (this.isCharging) {
       const data: Reservierung[] = await this.slotplanung.getOwnReservierungen().toPromise();
       const now: Date = new Date();
@@ -80,6 +86,9 @@ export class LadestatusPage implements OnInit {
         }
       }
     }
+    //verbleibende Zeit bis das Fahrzeug voll ist bestimmen
+    this.parseRemainingChargeTime();
+    //aussehen der Batterie anpassen
     this.changeBattery();
   }
 
@@ -101,6 +110,21 @@ export class LadestatusPage implements OnInit {
       return hours + ' Stunden';
     } else {
       return days + ' Tage';
+    }
+  }
+
+  /**
+   * parst Iso 8601 duration Strings und wandelt sie in Stunden (number) und Minuten (number) um.
+   * Setzt die variablen remainingHours und remainingMinutes
+   */
+  parseRemainingChargeTime() {
+    this.remainingHours = Number(this.ladestatus.ladedauerStundenMinuten.charAt(this.ladestatus.ladedauerStundenMinuten.indexOf('H') - 1));
+    if (this.ladestatus.ladedauerStundenMinuten.length === 7) {
+      // eslint-disable-next-line max-len
+      this.remainingMinutes = Number(this.ladestatus.ladedauerStundenMinuten.charAt(this.ladestatus.ladedauerStundenMinuten.indexOf('M') - 2));
+    } else {
+      // eslint-disable-next-line max-len
+      this.remainingMinutes = Number(this.ladestatus.ladedauerStundenMinuten.charAt(this.ladestatus.ladedauerStundenMinuten.indexOf('M') - 2));
     }
   }
 

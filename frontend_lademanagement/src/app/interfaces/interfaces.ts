@@ -16,7 +16,7 @@ export interface Slot {
 }
 
 export interface Ladestatus{
-  ladestand: number;
-  geladeneEnergie: number;
-  ladedauer: Date;
+  geladeneEnergieKwH: number;
+  ladestandProzent: number;
+  ladedauerStundenMinuten: string;
 }

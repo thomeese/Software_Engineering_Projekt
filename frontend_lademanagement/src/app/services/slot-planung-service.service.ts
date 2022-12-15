@@ -50,7 +50,13 @@ export class SlotPlanungServiceService {
    * Holt den Ladestatus des Fahrzeugs vom Backend.
    */
   getLadestatus(): Observable<Ladestatus> {
-    return this.http.get<Ladestatus>(this.rootUrl + '/rest/status');
+    return this.http.get<Ladestatus>(this.rootUrl + '/rest/status').pipe(
+      map((result: Ladestatus) => ({
+        geladeneEnergieKwH: result.geladeneEnergieKwH,
+        ladestandProzent: result.ladestandProzent,
+        ladedauerStundenMinuten: result.ladedauerStundenMinuten
+      }))
+    );
   }
 
   /**

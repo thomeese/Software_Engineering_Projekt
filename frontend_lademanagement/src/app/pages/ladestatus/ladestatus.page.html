@@ -20,23 +20,23 @@
       Bisher geladene Leistung
     </ion-card-subtitle>
     <ion-card-content class="main-content">
-      {{this.ladestatus.geladeneEnergie}} kWh
+      {{this.ladestatus.geladeneEnergieKwH}} kWh
     </ion-card-content>
     <ion-card class="card-bottom-right">
       <ion-card-header class="sub-header"> Verbleibende Ladezeit im Slot</ion-card-header>
       <ion-card-content class="sub-content"> {{this.msToTime(this.remainingSlottime)}} </ion-card-content>
       <ion-card-header class="sub-header"> Verbleibende Ladezeit, bis das Fahrzeug voll ist</ion-card-header>
-      <ion-card-content class="sub-content"> {{this.msToTime(this.ladestatus.ladedauer.getTime())}}</ion-card-content>
+      <ion-card-content class="sub-content"> {{this.remainingHours}} Stunden {{this.remainingMinutes}} Minuten</ion-card-content>
     </ion-card>
     <section class="battery">
       <div class="battery-card">
         <div class="battery-text">
           <h1>Akkustand</h1>
-          <p class=battery-percentage>{{this.ladestatus.ladestand}}%</p>
+          <p class=battery-percentage>{{this.ladestatus.ladestandProzent}}%</p>
         </div>
         <div class="outer-battery">
           <div class="battery-level">
-            <div class="battery-fluid" [style.height]="this.ladestatus.ladestand+'%'"
+            <div class="battery-fluid" [style.height]="this.ladestatus.ladestandProzent+'%'"
                  [style.background]="this.batteryFluidColor"></div>
           </div>
         </div>
@@ -51,23 +51,23 @@
       Bisher geladene Leistung
     </ion-card-subtitle>
     <ion-card-content class="main-content">
-      {{this.ladestatus.geladeneEnergie}}kw
+      {{this.ladestatus.geladeneEnergieKwH}}kw
     </ion-card-content>
     <ion-card class="card-small-screen">
       <ion-card-header class="sub-header"> Verbleibende Ladezeit im Slot</ion-card-header>
       <ion-card-content class="sub-content"> {{this.msToTime(this.remainingSlottime)}}</ion-card-content>
       <ion-card-header class="sub-header"> Verbleibende Ladezeit, bis das Fahrzeug voll ist</ion-card-header>
-      <ion-card-content class="sub-content"> {{this.msToTime(this.ladestatus.ladedauer.getTime())}}</ion-card-content>
+      <ion-card-content class="sub-content"> {{this.remainingHours}} Stunden {{this.remainingMinutes}} Minuten</ion-card-content>
     </ion-card>
     <section class="battery-small-screen">
       <div class="battery-card-small-screen">
         <div class="battery-text">
           <h1>Akkustand</h1>
-          <p class=battery-percentage>{{this.ladestatus.ladestand}}%</p>
+          <p class=battery-percentage>{{this.ladestatus.ladestandProzent}}%</p>
         </div>
         <div class="outer-battery">
           <div class="battery-level">
-            <div class="battery-fluid" [style.height]="this.ladestatus.ladestand+'%'"
+            <div class="battery-fluid" [style.height]="this.ladestatus.ladestandProzent+'%'"
                  [style.background]="this.batteryFluidColor"></div>
           </div>
         </div>
