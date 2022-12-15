@@ -117,7 +117,12 @@
 }
 
 .sub-header{
-  font-size: 25px;
+  margin-top: 55px;
+  font-size: 35px;
+}
+
+.sub-content{
+  font-size: 30px;
 }
 .main-card{
   position: relative;
@@ -133,5 +138,14 @@
   align-items: baseline;
   padding-bottom: 12px;
   overflow: scroll;
+}
 
+.main-subtitle{
+  text-align: center;
+  font-size: 40px;
+}
+
+.main-content{
+  text-align: center;
+  font-size: 45px;
 }

@@ -16,17 +16,17 @@
     <ion-card-header class="main-header">
       {{this.haeader}}
     </ion-card-header>
-    <ion-card-subtitle>
+    <ion-card-subtitle class="main-subtitle">
       Bisher geladene Leistung
     </ion-card-subtitle>
-    <ion-card-content>
+    <ion-card-content class="main-content">
       {{this.ladestatus.geladeneEnergie}} kWh
     </ion-card-content>
     <ion-card class="card-bottom-right">
       <ion-card-header class="sub-header"> Verbleibende Ladezeit im Slot</ion-card-header>
-      <ion-card-content> {{this.msToTime(this.remainingSlottime)}} </ion-card-content>
+      <ion-card-content class="sub-content"> {{this.msToTime(this.remainingSlottime)}} </ion-card-content>
       <ion-card-header class="sub-header"> Verbleibende Ladezeit, bis das Fahrzeug voll ist</ion-card-header>
-      <ion-card-content> {{this.msToTime(this.ladestatus.ladedauer.getTime())}}</ion-card-content>
+      <ion-card-content class="sub-content"> {{this.msToTime(this.ladestatus.ladedauer.getTime())}}</ion-card-content>
     </ion-card>
     <section class="battery">
       <div class="battery-card">
@@ -47,17 +47,17 @@
     <ion-card-header class="main-header">
       {{this.haeader}}
     </ion-card-header>
-    <ion-card-subtitle>
+    <ion-card-subtitle class="main-subtitle">
       Bisher geladene Leistung
     </ion-card-subtitle>
-    <ion-card-content>
+    <ion-card-content class="main-content">
       {{this.ladestatus.geladeneEnergie}}kw
     </ion-card-content>
     <ion-card class="card-small-screen">
       <ion-card-header class="sub-header"> Verbleibende Ladezeit im Slot</ion-card-header>
-      <ion-card-content> {{this.msToTime(this.remainingSlottime)}}</ion-card-content>
+      <ion-card-content class="sub-content"> {{this.msToTime(this.remainingSlottime)}}</ion-card-content>
       <ion-card-header class="sub-header"> Verbleibende Ladezeit, bis das Fahrzeug voll ist</ion-card-header>
-      <ion-card-content> {{this.msToTime(this.ladestatus.ladedauer.getTime())}}</ion-card-content>
+      <ion-card-content class="sub-content"> {{this.msToTime(this.ladestatus.ladedauer.getTime())}}</ion-card-content>
     </ion-card>
     <section class="battery-small-screen">
       <div class="battery-card-small-screen">
