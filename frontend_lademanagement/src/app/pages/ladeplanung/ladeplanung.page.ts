@@ -1,7 +1,7 @@
 import {
   Component,
   OnInit,
-  ChangeDetectorRef
+  ChangeDetectorRef, OnDestroy
 } from '@angular/core';
 import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
 import {CalendarEvent} from 'angular-calendar';
@@ -26,7 +26,7 @@ registerLocaleData(localeDE);
 
 
 //Basis Kalender hier zu finden: https://mattlewis92.github.io/angular-calendar/#/responsive-week-view
-export class LadeplanungPage implements OnInit {
+export class LadeplanungPage implements OnInit, OnDestroy {
   language = localeDE;
   viewDate: Date = new Date();
   //Anzahl der zu zeigenden naechsten Tage
