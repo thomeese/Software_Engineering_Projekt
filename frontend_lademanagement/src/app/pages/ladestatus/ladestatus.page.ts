@@ -12,8 +12,6 @@ export class LadestatusPage implements OnInit {
 
   remainingSlottime: number;
 
-  remainingHours: number;
-  remainingMinutes: number;
   batteryFluidColor: string;
 
   isCharging = false;
