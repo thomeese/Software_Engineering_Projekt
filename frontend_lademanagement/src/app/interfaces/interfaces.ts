@@ -15,8 +15,19 @@ export interface Slot {
   endzeit: Date;
 }
 
-export interface Ladestatus{
+export interface LadestatusDTO{
   geladeneEnergieKwH: number;
   ladestandProzent: number;
   ladedauerStundenMinuten: string;
+}
+
+export interface Ladestatus{
+  geladeneEnergieKwH: number;
+  ladestandProzent: number;
+  ladedauerStundenMinuten: VerbleibendeZeit;
+}
+
+export interface VerbleibendeZeit{
+  stunden: number;
+  minuten: number;
 }

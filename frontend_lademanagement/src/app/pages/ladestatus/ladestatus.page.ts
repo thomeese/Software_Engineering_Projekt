@@ -65,7 +65,10 @@ export class LadestatusPage implements OnInit {
       this.ladestatus = {
         geladeneEnergieKwH: 0,
         ladestandProzent: 0,
-        ladedauerStundenMinuten: ''
+        ladedauerStundenMinuten: {
+          stunden:0,
+          minuten:0
+        }
       };
     }
     //wenn nicht geladen wird Seite anpassen
@@ -86,8 +89,6 @@ export class LadestatusPage implements OnInit {
         }
       }
     }
-    //verbleibende Zeit bis das Fahrzeug voll ist bestimmen
-    this.parseRemainingChargeTime();
     //aussehen der Batterie anpassen
     this.changeBattery();
   }
@@ -110,21 +111,6 @@ export class LadestatusPage implements OnInit {
       return hours + ' Stunden';
     } else {
       return days + ' Tage';
-    }
-  }
-
-  /**
-   * parst Iso 8601 duration Strings und wandelt sie in Stunden (number) und Minuten (number) um.
-   * Setzt die variablen remainingHours und remainingMinutes
-   */
-  parseRemainingChargeTime() {
-    this.remainingHours = Number(this.ladestatus.ladedauerStundenMinuten.charAt(this.ladestatus.ladedauerStundenMinuten.indexOf('H') - 1));
-    if (this.ladestatus.ladedauerStundenMinuten.length === 7) {
-      // eslint-disable-next-line max-len
-      this.remainingMinutes = Number(this.ladestatus.ladedauerStundenMinuten.charAt(this.ladestatus.ladedauerStundenMinuten.indexOf('M') - 2));
-    } else {
-      // eslint-disable-next-line max-len
-      this.remainingMinutes = Number(this.ladestatus.ladedauerStundenMinuten.charAt(this.ladestatus.ladedauerStundenMinuten.indexOf('M') - 1));
     }
   }
 

@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Ladestatus, Reservierung, Slot, SlotID} from '../interfaces/interfaces';
+import {Ladestatus, LadestatusDTO, Reservierung, Slot, SlotID} from '../interfaces/interfaces';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -50,15 +50,17 @@ export class SlotPlanungServiceService {
    * Holt den Ladestatus des Fahrzeugs vom Backend.
    */
   getLadestatus(): Observable<Ladestatus> {
-    return this.http.get<Ladestatus>(this.rootUrl + '/rest/status').pipe(
-      map((result: Ladestatus) => ({
+    return this.http.get<LadestatusDTO>(this.rootUrl + '/rest/status').pipe(
+      map((result: LadestatusDTO) => ({
         geladeneEnergieKwH: result.geladeneEnergieKwH,
         ladestandProzent: result.ladestandProzent,
-        ladedauerStundenMinuten: result.ladedauerStundenMinuten
+        ladedauerStundenMinuten: {
+          stunden: Number(result.ladedauerStundenMinuten.split(':',2)[0]),
+          minuten: Number(result.ladedauerStundenMinuten.split(':',2)[1])
+        }
       }))
     );
   }
-
   /**
    * Sendet die benoetigten Daten fuer eine Reservierung an das Beckend.
    *
