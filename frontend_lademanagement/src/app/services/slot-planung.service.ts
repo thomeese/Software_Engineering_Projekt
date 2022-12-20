@@ -7,7 +7,7 @@ import {map} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class SlotPlanungServiceService {
+export class SlotPlanungService {
   readonly rootUrl = 'http://localhost:8080/backend_war'; // http://192.168.137.1:8080/backend_war_exploded
   constructor(private http: HttpClient) {
   }

@@ -1,7 +1,7 @@
 import {Component, Input, LOCALE_ID, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {ModalController} from '@ionic/angular';
-import {SlotPlanungServiceService} from '../../../services/slot-planung-service.service';
+import {SlotPlanungService} from '../../../services/slot-planung.service';
 import {format} from 'date-fns';
 import {Slot} from '../../../interfaces/interfaces';
 
@@ -22,7 +22,7 @@ export class BuchungPage implements OnInit {
 
   constructor(private formbuilder: FormBuilder,
               private modalctrl: ModalController,
-              private slotplanungService: SlotPlanungServiceService) {
+              private slotplanungService: SlotPlanungService) {
   }
 
   ngOnInit() {
