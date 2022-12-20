@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Ladestatus, LadestatusDTO, Reservierung, Slot, SlotID} from '../interfaces/interfaces';
+import {Ladestatus, LadestatusDTO, Punktekonto, Reservierung, Slot, SlotID} from '../interfaces/interfaces';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -55,12 +55,20 @@ export class SlotPlanungService {
         geladeneEnergieKwH: result.geladeneEnergieKwH,
         ladestandProzent: result.ladestandProzent,
         ladedauerStundenMinuten: {
-          stunden: Number(result.ladedauerStundenMinuten.split(':',2)[0]),
-          minuten: Number(result.ladedauerStundenMinuten.split(':',2)[1])
+          stunden: Number(result.ladedauerStundenMinuten.split(':', 2)[0]),
+          minuten: Number(result.ladedauerStundenMinuten.split(':', 2)[1])
         }
       }))
     );
   }
+
+  /**
+   * Holt die Informationen zum Punktekonto vom Backend
+   */
+  getPunktekontoInformations(): Observable<Punktekonto> {
+    return this.http.get<Punktekonto>(this.rootUrl + '/rest/punktekonto');
+  }
+
   /**
    * Sendet die benoetigten Daten fuer eine Reservierung an das Beckend.
    *
@@ -74,5 +82,4 @@ export class SlotPlanungService {
     httpOptions.headers.set('Access-Control-Allow-Origin', '*');
     return this.http.post<SlotID>(this.rootUrl + '/rest/slot', booking, httpOptions);
   }
-
 }

@@ -1,0 +1,27 @@
+.main-card{
+  position: relative;
+  border-radius: 10px;
+  background: gray;
+  height: 100%;
+  align-items: center;
+  padding-left: 550px;
+  padding-top: 200px;
+}
+
+.sub-card{
+  border-radius: 10px;
+  background: white;
+  width: 800px;
+  height: 600px;
+}
+
+.header {
+  font-size: 75px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.content{
+  font-size: 65px;
+  text-align: center;
+}
