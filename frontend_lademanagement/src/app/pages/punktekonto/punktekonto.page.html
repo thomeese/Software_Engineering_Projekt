@@ -9,7 +9,7 @@
 
 <ion-content>
 <ion-card class="main-card">
-  <ion-card class = "sub-card">
+  <ion-card class = "sub-card" *ngIf="this.punktekonto">
     <ion-card-header class="header">Mein Punktestand</ion-card-header>
     <ion-card-content class="content">{{this.punktekonto.punktestand}} Punkte</ion-card-content>
   </ion-card>

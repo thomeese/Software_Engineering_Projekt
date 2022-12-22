@@ -8,7 +8,7 @@ import {SlotPlanungService} from '../../services/slot-planung.service';
   styleUrls: ['./punktekonto.page.scss'],
 })
 export class PunktekontoPage implements OnInit {
-  punktekonto: Punktekonto ={punktestand:1};
+  punktekonto: Punktekonto;
 
   constructor(private slotplanung: SlotPlanungService) {
   }
