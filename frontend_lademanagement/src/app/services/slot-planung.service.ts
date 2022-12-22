@@ -1,13 +1,13 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Ladestatus, LadestatusDTO, Reservierung, Slot, SlotID} from '../interfaces/interfaces';
+import {Ladestatus, LadestatusDTO, Punktekonto, Reservierung, Slot, SlotID} from '../interfaces/interfaces';
 import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SlotPlanungServiceService {
+export class SlotPlanungService {
   readonly rootUrl = 'http://localhost:8080/backend_war'; // http://192.168.137.1:8080/backend_war_exploded
   constructor(private http: HttpClient) {
   }
@@ -55,12 +55,20 @@ export class SlotPlanungServiceService {
         geladeneEnergieKwH: result.geladeneEnergieKwH,
         ladestandProzent: result.ladestandProzent,
         ladedauerStundenMinuten: {
-          stunden: Number(result.ladedauerStundenMinuten.split(':',2)[0]),
-          minuten: Number(result.ladedauerStundenMinuten.split(':',2)[1])
+          stunden: Number(result.ladedauerStundenMinuten.split(':', 2)[0]),
+          minuten: Number(result.ladedauerStundenMinuten.split(':', 2)[1])
         }
       }))
     );
   }
+
+  /**
+   * Holt die Informationen zum Punktekonto vom Backend
+   */
+  getPunktekontoInformations(): Observable<Punktekonto> {
+    return this.http.get<Punktekonto>(this.rootUrl + '/rest/punktesystem');
+  }
+
   /**
    * Sendet die benoetigten Daten fuer eine Reservierung an das Beckend.
    *
@@ -74,5 +82,4 @@ export class SlotPlanungServiceService {
     httpOptions.headers.set('Access-Control-Allow-Origin', '*');
     return this.http.post<SlotID>(this.rootUrl + '/rest/slot', booking, httpOptions);
   }
-
 }

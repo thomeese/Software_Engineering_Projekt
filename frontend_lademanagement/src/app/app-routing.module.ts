@@ -12,6 +12,10 @@ const routes: Routes = [
   },  {
     path: 'ladestatus',
     loadChildren: () => import('./pages/ladestatus/ladestatus.module').then( m => m.LadestatusPageModule)
+  },
+  {
+    path: 'punktekonto',
+    loadChildren: () => import('./pages/punktekonto/punktekonto.module').then( m => m.PunktekontoPageModule)
   }
 
 ];

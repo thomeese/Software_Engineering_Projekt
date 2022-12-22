@@ -31,3 +31,7 @@ export interface VerbleibendeZeit{
   stunden: number;
   minuten: number;
 }
+
+export interface Punktekonto{
+  punktestand: number;
+}

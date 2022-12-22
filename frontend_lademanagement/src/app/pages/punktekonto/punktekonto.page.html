@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Mein Punktekonto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-card class="main-card">
+  <ion-card class = "sub-card" *ngIf="this.punktekonto">
+    <ion-card-header class="header">Mein Punktestand</ion-card-header>
+    <ion-card-content class="content">{{this.punktekonto.punktestand}} Punkte</ion-card-content>
+  </ion-card>
+</ion-card>
+</ion-content>
