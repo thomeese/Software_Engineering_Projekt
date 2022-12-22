@@ -1,9 +1,43 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-card class="form-card">
+    <ion-card-content>
+      <form [formGroup]="this.loginFrom" (submit)="this.signIn()">
+        <ion-item>
+          <ion-icon name="mail-outline"></ion-icon>
+          <ion-label>Email:</ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+          <ion-note slot="error" *ngIf="this.loginFrom.dirty">Geben sie ein gültige Firmen Email-Adresse ein.</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <ion-label>Passwort:</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col></ion-col>
+            <ion-col>
+              <ion-button class="submit-button" type="submit" [disabled]="!this.loginFrom.valid">Anmelden</ion-button>
+            </ion-col>
+            <ion-col></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+            </ion-col>
+            <ion-col>
+              <ion-button class="register-button" fill="clear">Registrieren</ion-button>
+            </ion-col>
+            <ion-col>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {AuthenticationService} from './services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +14,17 @@ export class AppComponent {
   ];
   public labels = [];
 
-  constructor() {
+  constructor(private authService: AuthenticationService,
+              private router: Router) {
+  }
+
+  /**
+   * Meldet einen angemeldeten benutzer ab.
+   */
+  async signOut() {
+    await this.authService.signOut();
+    await this.router.navigateByUrl('/login', {replaceUrl: true});
+    document.location.reload();
   }
 
 }
