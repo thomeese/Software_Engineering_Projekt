@@ -12,6 +12,10 @@ const routes: Routes = [
   },  {
     path: 'ladestatus',
     loadChildren: () => import('./pages/ladestatus/ladestatus.module').then( m => m.LadestatusPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   }
 
 ];
