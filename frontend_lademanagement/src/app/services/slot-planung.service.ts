@@ -66,7 +66,7 @@ export class SlotPlanungService {
    * Holt die Informationen zum Punktekonto vom Backend
    */
   getPunktekontoInformations(): Observable<Punktekonto> {
-    return this.http.get<Punktekonto>(this.rootUrl + '/rest/punktekonto');
+    return this.http.get<Punktekonto>(this.rootUrl + '/rest/punktesystem');
   }
 
   /**

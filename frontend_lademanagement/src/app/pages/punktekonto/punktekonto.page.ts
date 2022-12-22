@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Punktekonto} from "../../interfaces/interfaces";
-import {SlotPlanungService} from "../../services/slot-planung.service";
+import {Punktekonto} from '../../interfaces/interfaces';
+import {SlotPlanungService} from '../../services/slot-planung.service';
 
 @Component({
   selector: 'app-punktekonto',
@@ -8,7 +8,7 @@ import {SlotPlanungService} from "../../services/slot-planung.service";
   styleUrls: ['./punktekonto.page.scss'],
 })
 export class PunktekontoPage implements OnInit {
-  punktekonto: Punktekonto;
+  punktekonto: Punktekonto ={punktestand:1};
 
   constructor(private slotplanung: SlotPlanungService) {
   }
