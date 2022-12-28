@@ -35,3 +35,10 @@ export interface VerbleibendeZeit{
 export interface Punktekonto{
   punktestand: number;
 }
+
+export interface konfigurationsKonstanten {
+  einsteckzeit_minuten: number;
+  aussteckzeit_minuten: number;
+  minimale_ladedauer_minuten: number;
+  maximale_ladedauer_minuten: number;
+}

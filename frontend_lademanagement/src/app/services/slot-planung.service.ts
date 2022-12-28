@@ -74,12 +74,12 @@ export class SlotPlanungService {
    *
    * @param booking zu sendende Reservierung
    */
-  postBookedSlot(booking: Slot): Observable<SlotID> {
+  postBookedSlot(booking: Slot): Observable<Reservierung> {
     const httpOptions = {
       headers: new HttpHeaders()
     };
     httpOptions.headers.set('Content-Type', 'application/json');
     httpOptions.headers.set('Access-Control-Allow-Origin', '*');
-    return this.http.post<SlotID>(this.rootUrl + '/rest/slot', booking, httpOptions);
+    return this.http.post<Reservierung>(this.rootUrl + '/rest/slot', booking, httpOptions);
   }
 }
