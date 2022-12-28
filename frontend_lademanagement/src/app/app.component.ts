@@ -23,7 +23,6 @@ export class AppComponent {
    * Meldet einen angemeldeten benutzer ab.
    */
   async signOut() {
-    await this.authService.signOut();
     await this.router.navigateByUrl('/login', {replaceUrl: true});
     document.location.reload();
   }
