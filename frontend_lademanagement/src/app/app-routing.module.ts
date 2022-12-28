@@ -4,12 +4,13 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/ladeplanung',
+    redirectTo: '/login',
     pathMatch: 'full'
   }, {
     path: 'ladeplanung',
     loadChildren: () => import('./pages/ladeplanung/ladeplanung.module').then(m => m.LadeplanungPageModule)
-  },  {
+  },
+  {
     path: 'ladestatus',
     loadChildren: () => import('./pages/ladestatus/ladestatus.module').then( m => m.LadestatusPageModule)
   },

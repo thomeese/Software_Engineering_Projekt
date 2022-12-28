@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 })
 export class LoginPage implements OnInit {
   loginFrom: FormGroup;
-  regexEmail = '.*@hs-osnabrueck.de';
+  regexEmail = '.*@koszarek.ml';
   regexPasswort = '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,32}$'; //Maybe not needed
 
   constructor(private formbuilder: FormBuilder,
@@ -37,12 +37,6 @@ export class LoginPage implements OnInit {
     await loading.present();
     const loggedInUser = await this.authService.signIn(this.loginFrom.value);
     await loading.dismiss();
-
-    if (loggedInUser) {
-      await this.router.navigateByUrl('/ladeplanung', {replaceUrl: true});
-    } else {
-      await this.displayAlert('Anmeldung fehlgeschlagen', 'Bitte versuchen sie es erneut.');
-    }
   }
 
   /**
