@@ -22,10 +22,11 @@ export class AuthenticationService {
       headers: new HttpHeaders(),
       withCredentials: true
     };
-    httpOptions.headers.set('Content-Type', 'application/json');
+    httpOptions.headers.set('Content-Type', 'text/plain');
+    httpOptions.headers.set('Accept','*/*');
     this.http.post(this.rootUrl + '/rest/login', email, httpOptions).subscribe(res=>{
       if(res.status===200){
-        console.log('Penis');
+        console.log('Test');
       }
     });
   }
