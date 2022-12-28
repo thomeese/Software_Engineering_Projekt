@@ -1,6 +1,6 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {Ladestatus, Reservierung} from '../../interfaces/interfaces';
-import {SlotPlanungServiceService} from '../../services/slot-planung-service.service';
+import {SlotPlanungService} from '../../services/slot-planung.service';
 
 @Component({
   selector: 'app-ladestatus',
@@ -18,7 +18,7 @@ export class LadestatusPage implements OnInit {
   haeader: string;
   fullscreen = true;
 
-  constructor(private slotplanung: SlotPlanungServiceService) {
+  constructor(private slotplanung: SlotPlanungService) {
   }
 
   /**

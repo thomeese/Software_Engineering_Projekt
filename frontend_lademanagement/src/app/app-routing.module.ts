@@ -9,13 +9,18 @@ const routes: Routes = [
   }, {
     path: 'ladeplanung',
     loadChildren: () => import('./pages/ladeplanung/ladeplanung.module').then(m => m.LadeplanungPageModule)
-  },  {
+  },
+  {
     path: 'ladestatus',
     loadChildren: () => import('./pages/ladestatus/ladestatus.module').then( m => m.LadestatusPageModule)
   },
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'punktekonto',
+    loadChildren: () => import('./pages/punktekonto/punktekonto.module').then( m => m.PunktekontoPageModule)
   }
 
 ];

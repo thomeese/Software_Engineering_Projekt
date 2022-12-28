@@ -9,7 +9,7 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {LoadingController, ModalController} from '@ionic/angular';
 import {BuchungPage} from './buchung/buchung.page';
-import {SlotPlanungServiceService} from 'src/app/services/slot-planung-service.service';
+import {SlotPlanungService} from 'src/app/services/slot-planung.service';
 import {Reservierung, Slot} from '../../interfaces/interfaces';
 import { registerLocaleData } from '@angular/common';
 import localeDE from '@angular/common/locales/de';
@@ -47,7 +47,7 @@ export class LadeplanungPage implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
-    private slotplanungService: SlotPlanungServiceService,
+    private slotplanungService: SlotPlanungService,
     private breakpointObserver: BreakpointObserver,
     private cd: ChangeDetectorRef,
     private modalCtrl: ModalController,

@@ -46,6 +46,12 @@ verwendeten Dependencies können in der *package.json*-Datei eingesehen werden. 
 Plugins markiert (wenn in der IDE geöffnet). Druch ein schnelles googeln der Zeile erhält man das benötigte.<br />
 Kommando für die Installation.<br />
 
+# Vor dem Starten
+
+Eventuell muss die root-URL des Backends im Frontend angepasst werden.
+Der Dateipfad ist folgender: \src\app\services\slot-planung-service.service.ts
+und wird in der Variable readonly rootUrl gesetzt.
+
 # Starten des lokalen Webservers
 
 Um das Frontend während des Entwicklungsprozesses auch visuell sehen zu können, bietet Ionic einen lokalen Websever.<br />
