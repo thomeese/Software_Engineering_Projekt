@@ -36,7 +36,14 @@ export class LoginPage implements OnInit {
     const loading = await this.loadingController.create();
     await loading.present();
     const loggedInUser = await this.authService.signIn(this.loginFrom.value);
-    await loading.dismiss();
+    loggedInUser.subscribe(res => {
+      if (res === true) {
+        this.router.navigateByUrl('/ladeplanung', {replaceUrl: true});
+      } else {
+        this.displayAlert('Anmeldung fehlgeschlagen', 'Versuchen Sie es Bitte erneut');
+      }
+      loading.dismiss();
+    });
   }
 
   /**
