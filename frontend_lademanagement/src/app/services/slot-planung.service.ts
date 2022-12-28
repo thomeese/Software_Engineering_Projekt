@@ -16,7 +16,7 @@ export class SlotPlanungService {
    * Holt alle eigenen gebuchten Reservierungen von dem Backend und gibt diese formatiert als eine Liste von Reservierungen zurueck.
    */
   getOwnReservierungen(): Observable<Reservierung[]> {
-    return this.http.get<Reservierung[]>(this.rootUrl + '/rest/reservierung')
+    return this.http.get<Reservierung[]>(this.rootUrl + '/rest/reservierung',{withCredentials:true})
       .pipe(
         map((results: Reservierung[]) => results.map((reservierung: Reservierung) => ({
             name: reservierung.name,
@@ -50,7 +50,7 @@ export class SlotPlanungService {
    * Holt den Ladestatus des Fahrzeugs vom Backend.
    */
   getLadestatus(): Observable<Ladestatus> {
-    return this.http.get<LadestatusDTO>(this.rootUrl + '/rest/status').pipe(
+    return this.http.get<LadestatusDTO>(this.rootUrl + '/rest/status',{withCredentials:true}).pipe(
       map((result: LadestatusDTO) => ({
         geladeneEnergieKwH: result.geladeneEnergieKwH,
         ladestandProzent: result.ladestandProzent,
@@ -76,7 +76,8 @@ export class SlotPlanungService {
    */
   postBookedSlot(booking: Slot): Observable<SlotID> {
     const httpOptions = {
-      headers: new HttpHeaders()
+      headers: new HttpHeaders(),
+      withCredentials:true
     };
     httpOptions.headers.set('Content-Type', 'application/json');
     httpOptions.headers.set('Access-Control-Allow-Origin', '*');

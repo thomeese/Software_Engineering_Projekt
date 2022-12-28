@@ -1,0 +1,35 @@
+ion-content{
+  --background: lightgray;
+}
+.form-card{
+  position: relative;
+  margin-left: 25%;
+  margin-top: 10%;
+  height: 50%;
+  width: 50%;
+  border-radius: 10px;
+  background: white;
+}
+ion-card-content{
+  ion-item{
+    padding-top: 15px;
+  }
+}
+
+.submit-button{
+  --align-content: center;
+  --position: relative;
+  --border-radius: 10px;
+  --background: lightgreen;
+  --color: black;
+  margin-top: 120px;
+  display: flex;
+}
+.register-button{
+  --align-content: center;
+  --position: relative;
+  --border-radius: 10px;
+  --color: blue;
+  margin-top: 15px;
+  display: flex;
+}
