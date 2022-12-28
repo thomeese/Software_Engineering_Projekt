@@ -37,7 +37,4 @@ export class AuthenticationService {
     });
     return erg.asObservable();
   }
-  async signOut() {
-    //Todo: implement Method
-  }
 }
