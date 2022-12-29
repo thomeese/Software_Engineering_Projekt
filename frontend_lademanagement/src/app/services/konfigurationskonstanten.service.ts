@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { konfigurationsKonstanten } from '../interfaces/interfaces';
+import { konfigurationsKonstanten, konstantenLadedauer, konstantenSteckzeiten } from '../interfaces/interfaces';
 
 
 /**
@@ -16,12 +16,7 @@ import { konfigurationsKonstanten } from '../interfaces/interfaces';
 export class KonfigurationskonstantenService {
   //TODO: rootURL aus beiden Services auslagern um an einer zentralen Stelle zu haben
   readonly rootUrl = 'http://localhost:8080/backend_war'; // http://192.168.137.1:8080/backend_war_exploded
-  private konfigurationsKonstanten : konfigurationsKonstanten = {
-    einsteckzeit_minuten: 15,
-    aussteckzeit_minuten: 15,
-    minimale_ladedauer_minuten: 30,
-    maximale_ladedauer_minuten: 120
-  };
+  private konfigurationsKonstanten : konfigurationsKonstanten;
 
   constructor(private http: HttpClient) { 
     //TODO: Mock durch richtige holeKonfigurationsKonstantenVomBackend ersetzen.
@@ -36,8 +31,8 @@ export class KonfigurationskonstantenService {
    */
 
   holeKonfigurationsKonstantenVomBackend() {
-    this.http.get<konfigurationsKonstanten>(this.rootUrl + '/rest/konfiguration').subscribe((data) => {
-      this.konfigurationsKonstanten = data;
+    this.http.get<konfigurationsKonstanten>(this.rootUrl + '/rest/konfiguration').subscribe((konstanten) => {
+      //TODO: wenn Mockt nicht mehr verwendet wird, konstanten entsprechend auf die Interfaces mappen.
     });
   }
 
@@ -49,21 +44,48 @@ export class KonfigurationskonstantenService {
    * 
    */
   mockKonfigurationsKonstanten() {
-    this.konfigurationsKonstanten.einsteckzeit_minuten = 15;
-    this.konfigurationsKonstanten.aussteckzeit_minuten = 15;
-    this.konfigurationsKonstanten.minimale_ladedauer_minuten = 30;
-    this.konfigurationsKonstanten.maximale_ladedauer_minuten = 120;
+    this.konfigurationsKonstanten = {
+      konstantenLadedauer: {
+        minimale_ladedauer_minuten: 30,
+        maximale_ladedauer_minuten: 120,
+      },
+      konstantenSteckzeiten: {
+        einsteckzeit_minuten: 15,
+        aussteckzeit_minuten: 15,
+      }
+    };
     console.log(this.konfigurationsKonstanten);
   }
 
   /**
-   * Gibt die konfigurationsKonstanten als ein Objekt zurueck.
+   * Gibt alle Konfigurationskonstanten als ein Objekt zurueck.
    * 
-   * @returns konfigurationsKonstanten fuer die Ladeplanung
+   * @returns alle Konfigurationskonstanten des Systems
    * 
    * @author Manuel Arling
    */
-  getKonfigurationsKonstanten() {
+  getKonfigurationsKonstanten(): konfigurationsKonstanten {
     return this.konfigurationsKonstanten;
+  }
+  
+  
+  /**
+   * Gibt die Konfigurationskonstanten fuer die ladedauer zurueck.
+   * @returns Konfigurationskonstanten fuer die Ladedauer
+   * 
+   * @author Manuel Arling
+   */
+  getLadedauerKonstanten(): konstantenLadedauer {
+    return this.konfigurationsKonstanten.konstantenLadedauer;
+  }
+   
+  /**
+   * Gibt die Konfigurationskonstanten fuer die Ein- und Aussteckzeiten zurueck.
+   * @returns Konfigurationskonstanten fuer die Ein- und Aussteckzeiten.
+   *
+   * @author Manuel Arling
+   */
+  getLadedauerKonstanten(): konstantenSteckzeiten {
+     return this.konfigurationsKonstanten.konstantenSteckzeiten;
   }
 }
