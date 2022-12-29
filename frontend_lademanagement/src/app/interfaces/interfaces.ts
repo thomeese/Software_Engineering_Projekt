@@ -37,8 +37,16 @@ export interface Punktekonto{
 }
 
 export interface konfigurationsKonstanten {
-  einsteckzeit_minuten: number;
-  aussteckzeit_minuten: number;
+  konstantenLadedauer: konstantenLadedauer;
+  konstantenSteckzeiten: konstantenSteckzeit;
+}
+
+export interface konstantenLadedauer {
   minimale_ladedauer_minuten: number;
   maximale_ladedauer_minuten: number;
+}
+
+export interface konstantenSteckzeiten {
+  einsteckzeit_minuten: number;
+  aussteckzeit_minuten: number;
 }
