@@ -75,7 +75,7 @@ export class KonfigurationskonstantenService {
    * 
    * @author Manuel Arling
    */
-  getLadedauerKonstanten(): konstantenLadedauer {
+  getKonstantenLadedauer(): konstantenLadedauer {
     return this.konfigurationsKonstanten.konstantenLadedauer;
   }
    
@@ -85,7 +85,7 @@ export class KonfigurationskonstantenService {
    *
    * @author Manuel Arling
    */
-  getLadedauerKonstanten(): konstantenSteckzeiten {
+  getKonstantenSteckzeiten(): konstantenSteckzeiten {
      return this.konfigurationsKonstanten.konstantenSteckzeiten;
   }
 }
