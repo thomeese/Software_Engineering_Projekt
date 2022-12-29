@@ -80,7 +80,7 @@ export class BuchungPage implements OnInit {
    * @param errorReasons der im Alert anzuzeigender Text.
    * @author Manuel Arling
    */
-  showErrorsAlert(errorReasons: String[]) {
+  showErrorsAlert(errorReasons: string[]) {
     alert(errorReasons);
   }
 
