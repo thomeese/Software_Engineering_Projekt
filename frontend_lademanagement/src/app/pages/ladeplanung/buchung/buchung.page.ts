@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@ang
 import {ModalController} from '@ionic/angular';
 import {SlotPlanungService} from '../../../services/slot-planung.service';
 import {format} from 'date-fns';
-import {konfigurationsKonstanten, Slot} from '../../../interfaces/interfaces';
+import {konstantenLadedauer, Slot} from '../../../interfaces/interfaces';
 import {catchError } from 'rxjs/operators';
 import {of} from 'rxjs';
 import { KonfigurationskonstantenService } from 'src/app/services/konfigurationskonstanten.service';
@@ -21,7 +21,7 @@ export class BuchungPage implements OnInit {
   @Input() endDate: Date; // zu reservierender Tag
   private reservierungForm: FormGroup;
 
-  private konfigurationsKonstanten: konfigurationsKonstanten;
+  private konstantenLadedauer: konstantenLadedauer;
 
   constructor(private formbuilder: FormBuilder,
               private modalctrl: ModalController,
@@ -31,7 +31,7 @@ export class BuchungPage implements OnInit {
 
   ngOnInit() {
     //Konstanten vom Backend laden
-    this.konfigurationsKonstanten = this.konfigurationsKonstantenService.getKonfigurationsKonstanten();
+    this.konstantenLadedauer = this.konfigurationsKonstantenService.getKonstantenLadedauer();
 
     //Reactive-form erstellen
     //Formatiere Date zu ISOString mit Timezonen Beruecksichtigung
@@ -64,9 +64,9 @@ export class BuchungPage implements OnInit {
       console.log(endzeit);
       if (startzeit >= endzeit) {
         return {smaller: true};
-      } else if ((endzeit.getTime() - startzeit.getTime()) / 1000 / 60 < this.konfigurationsKonstanten.minimale_ladedauer_minuten) {
+      } else if ((endzeit.getTime() - startzeit.getTime()) / 1000 / 60 < this.konstantenLadedauer.minimale_ladedauer_minuten) {
         return {mintimeError: true};
-      } else if ((endzeit.getTime() - startzeit.getTime()) / 1000 / 60 > this.konfigurationsKonstanten.maximale_ladedauer_minuten) {
+      } else if ((endzeit.getTime() - startzeit.getTime()) / 1000 / 60 > this.konstantenLadedauer.maximale_ladedauer_minuten) {
         return {maxtimeError: true};
       } else { //TODO: Hier sollen nach dem Durchstich die weiteren Pruefungen ergaenzt werden
         return null;
@@ -75,7 +75,7 @@ export class BuchungPage implements OnInit {
   }
 
   /**
-   * Methode zum Erstellen und Anzeigen eines neuen Alerts mit den √ºbergebenen error Array als auszugebender Text.
+   * Methode zum Erstellen und Anzeigen eines neuen Alerts mit den Åbergebenen error Array als auszugebender Text.
    * 
    * @param errorReasons der im Alert anzuzeigender Text.
    * @author Manuel Arling
