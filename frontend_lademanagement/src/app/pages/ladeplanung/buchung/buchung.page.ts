@@ -75,7 +75,7 @@ export class BuchungPage implements OnInit {
   }
 
   /**
-   * Methode zum Erstellen und Anzeigen eines neuen Alerts mit den bergebenen error Array als auszugebender Text.
+   * Methode zum Erstellen und Anzeigen eines neuen Alerts mit den ï¿½bergebenen error Array als auszugebender Text.
    * 
    * @param errorReasons der im Alert anzuzeigender Text.
    * @author Manuel Arling
@@ -106,10 +106,10 @@ export class BuchungPage implements OnInit {
         this.showErrorsAlert(error.error);
         return of(0);
       })
-    ).subscribe(reservierung => {
-      if(reservierung != 0) {
+    ).subscribe(erstellteReservierung => {
+      if(erstellteReservierung !== 0) {
         //Das erhaltene Reservierungsobjekt wird momentan nicht verwendet.
-        console.log(reservierung);
+        console.log(erstellteReservierung);
       }
       this.closeModal();
     });
