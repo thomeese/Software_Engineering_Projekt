@@ -3,7 +3,10 @@ import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@ang
 import {ModalController} from '@ionic/angular';
 import {SlotPlanungService} from '../../../services/slot-planung.service';
 import {format} from 'date-fns';
-import {Slot} from '../../../interfaces/interfaces';
+import {konstantenLadedauer, Slot} from '../../../interfaces/interfaces';
+import {catchError } from 'rxjs/operators';
+import {of} from 'rxjs';
+import { KonfigurationskonstantenService } from 'src/app/services/konfigurationskonstanten.service';
 
 @Component({
   selector: 'app-buchung',
@@ -11,26 +14,31 @@ import {Slot} from '../../../interfaces/interfaces';
   styleUrls: ['./buchung.page.scss'],
 })
 /**
- * @author Thomas Meese
+ * @author Thomas Meese, Manuel Arling
  */
 export class BuchungPage implements OnInit {
   @Input() startDate: Date; // zu reservierender Tag
   @Input() endDate: Date; // zu reservierender Tag
   private reservierungForm: FormGroup;
-  private minSlottime = 30;
-  private maxSlottime = 120;
+
+  private konstantenLadedauer: konstantenLadedauer;
 
   constructor(private formbuilder: FormBuilder,
               private modalctrl: ModalController,
-              private slotplanungService: SlotPlanungService) {
+              private slotplanungService: SlotPlanungService,
+              private konfigurationsKonstantenService: KonfigurationskonstantenService) {
   }
 
   ngOnInit() {
+    //Konstanten vom Backend laden
+    this.konstantenLadedauer = this.konfigurationsKonstantenService.getKonstantenLadedauer();
+
     //Reactive-form erstellen
     //Formatiere Date zu ISOString mit Timezonen Beruecksichtigung
     const startDateISOWithTimezone = new Date(this.startDate.getTime() - (this.startDate.getTimezoneOffset() * 60000)).toISOString();
     const endDateISOWithTimezone = new Date(this.endDate.getTime() - (this.endDate.getTimezoneOffset() * 60000)).toISOString();
-
+    
+    
     this.reservierungForm = this.formbuilder.group({
         startzeit: new FormControl(startDateISOWithTimezone, Validators.required),
         endzeit: new FormControl(endDateISOWithTimezone, Validators.required)
@@ -52,11 +60,13 @@ export class BuchungPage implements OnInit {
     return (checkForm: FormGroup): { [key: string]: boolean } => {
       const startzeit: Date = new Date(checkForm.get('startzeit').value);
       const endzeit: Date = new Date(checkForm.get('endzeit').value);
+      console.log(startzeit);
+      console.log(endzeit);
       if (startzeit >= endzeit) {
         return {smaller: true};
-      } else if ((endzeit.getTime() - startzeit.getTime()) / 1000 / 60 < this.minSlottime) {
+      } else if ((endzeit.getTime() - startzeit.getTime()) / 1000 / 60 < this.konstantenLadedauer.minimale_ladedauer_minuten) {
         return {mintimeError: true};
-      } else if ((endzeit.getTime() - startzeit.getTime()) / 1000 / 60 > this.maxSlottime) {
+      } else if ((endzeit.getTime() - startzeit.getTime()) / 1000 / 60 > this.konstantenLadedauer.maximale_ladedauer_minuten) {
         return {maxtimeError: true};
       } else { //TODO: Hier sollen nach dem Durchstich die weiteren Pruefungen ergaenzt werden
         return null;
@@ -65,9 +75,23 @@ export class BuchungPage implements OnInit {
   }
 
   /**
+   * Methode zum Erstellen und Anzeigen eines neuen Alerts mit den �bergebenen error Array als auszugebender Text.
+   * 
+   * @param errorReasons der im Alert anzuzeigender Text.
+   * @author Manuel Arling
+   */
+  showErrorsAlert(errorReasons: string[]) {
+    alert(errorReasons);
+  }
+
+  /**
    * Die Funktion uebermittelt die vom Nutzer eingegebenen Daten
    * an die REST-Schnitstelle. Fuer die Uebermittlung wird der
    * Service SlotplanungService verwendet.
+   * 
+   * Der Response wird auf Gueltigkeit geprueft, bei einem Fehler wird der error Text ausgegeben.
+   * 
+   * @author Thomas Meese, Manuel Arling
    */
   async reservierungBuchen() {
     const reservierung: Slot = {
@@ -77,9 +101,16 @@ export class BuchungPage implements OnInit {
       endzeit: this.reservierungForm.getRawValue().endzeit.toString().replace('Z', '').split('+')[0],
     };
     console.log('Reservierung erstellen.');
-    this.slotplanungService.postBookedSlot(reservierung).subscribe(slotID => {
-      console.log('SlotID: ');
-      console.log(slotID);
+    this.slotplanungService.postBookedSlot(reservierung).pipe(
+      catchError(error => {
+        this.showErrorsAlert(error.error);
+        return of(0);
+      })
+    ).subscribe(erstellteReservierung => {
+      if(erstellteReservierung !== 0) {
+        //Das erhaltene Reservierungsobjekt wird momentan nicht verwendet.
+        console.log(erstellteReservierung);
+      }
       this.closeModal();
     });
   }
