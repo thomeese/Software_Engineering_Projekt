@@ -3,10 +3,10 @@ import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@ang
 import {ModalController} from '@ionic/angular';
 import {SlotPlanungService} from '../../../services/slot-planung.service';
 import {format} from 'date-fns';
-import {konstantenLadedauer, Slot} from '../../../interfaces/interfaces';
-import {catchError } from 'rxjs/operators';
+import {KonstantenLadedauer, Slot} from '../../../interfaces/interfaces';
+import {catchError} from 'rxjs/operators';
 import {of} from 'rxjs';
-import { KonfigurationskonstantenService } from 'src/app/services/konfigurationskonstanten.service';
+import {KonfigurationskonstantenService} from 'src/app/services/konfigurationskonstanten.service';
 
 @Component({
   selector: 'app-buchung',
@@ -21,7 +21,7 @@ export class BuchungPage implements OnInit {
   @Input() endDate: Date; // zu reservierender Tag
   private reservierungForm: FormGroup;
 
-  private konstantenLadedauer: konstantenLadedauer;
+  private konstantenLadedauer: KonstantenLadedauer;
 
   constructor(private formbuilder: FormBuilder,
               private modalctrl: ModalController,
@@ -37,8 +37,6 @@ export class BuchungPage implements OnInit {
     //Formatiere Date zu ISOString mit Timezonen Beruecksichtigung
     const startDateISOWithTimezone = new Date(this.startDate.getTime() - (this.startDate.getTimezoneOffset() * 60000)).toISOString();
     const endDateISOWithTimezone = new Date(this.endDate.getTime() - (this.endDate.getTimezoneOffset() * 60000)).toISOString();
-    
-    
     this.reservierungForm = this.formbuilder.group({
         startzeit: new FormControl(startDateISOWithTimezone, Validators.required),
         endzeit: new FormControl(endDateISOWithTimezone, Validators.required)
@@ -76,7 +74,7 @@ export class BuchungPage implements OnInit {
 
   /**
    * Methode zum Erstellen und Anzeigen eines neuen Alerts mit den �bergebenen error Array als auszugebender Text.
-   * 
+   *
    * @param errorReasons der im Alert anzuzeigender Text.
    * @author Manuel Arling
    */
@@ -88,9 +86,9 @@ export class BuchungPage implements OnInit {
    * Die Funktion uebermittelt die vom Nutzer eingegebenen Daten
    * an die REST-Schnitstelle. Fuer die Uebermittlung wird der
    * Service SlotplanungService verwendet.
-   * 
+   *
    * Der Response wird auf Gueltigkeit geprueft, bei einem Fehler wird der error Text ausgegeben.
-   * 
+   *
    * @author Thomas Meese, Manuel Arling
    */
   async reservierungBuchen() {
@@ -107,7 +105,7 @@ export class BuchungPage implements OnInit {
         return of(0);
       })
     ).subscribe(erstellteReservierung => {
-      if(erstellteReservierung !== 0) {
+      if (erstellteReservierung !== 0) {
         //Das erhaltene Reservierungsobjekt wird momentan nicht verwendet.
         console.log(erstellteReservierung);
       }

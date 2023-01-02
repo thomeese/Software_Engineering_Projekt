@@ -1,13 +1,18 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { konfigurationsKonstanten, konstantenLadedauer, konstantenSteckzeiten } from '../interfaces/interfaces';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {
+  KonfigurationsKonstanten,
+  KonstantenLadedauer,
+  KonstantenLogin,
+  KonstantenSteckzeiten
+} from '../interfaces/interfaces';
 
 
 /**
  * Service Klasse zum Holen der Konfigurationskonstanten vom Backend, wie z.B. Minimaleladezeit, Maximaleladezeit, etc.
- * 
+ *
  * @author Manuel Arling
- * 
+ *
  */
 
 @Injectable({
@@ -16,9 +21,9 @@ import { konfigurationsKonstanten, konstantenLadedauer, konstantenSteckzeiten } 
 export class KonfigurationskonstantenService {
   //TODO: rootURL aus beiden Services auslagern um an einer zentralen Stelle zu haben
   readonly rootUrl = 'http://localhost:8080/backend_war'; // http://192.168.137.1:8080/backend_war_exploded
-  private konfigurationsKonstanten : konfigurationsKonstanten;
+  private konfigurationsKonstanten: KonfigurationsKonstanten;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     //TODO: Mock durch richtige holeKonfigurationsKonstantenVomBackend ersetzen.
     //this.holeKonfigurationsKonstantenVomBackend();
     this.mockKonfigurationsKonstanten();
@@ -26,12 +31,12 @@ export class KonfigurationskonstantenService {
 
   /**
    * Holt die Konfigurationskonstanten vom Backenend und speichert diese in der privaten Variable ab.
-   * 
+   *
    * @author Manuel Arling
    */
 
   holeKonfigurationsKonstantenVomBackend() {
-    this.http.get<konfigurationsKonstanten>(this.rootUrl + '/rest/konfiguration').subscribe((konstanten) => {
+    this.http.get<KonfigurationsKonstanten>(this.rootUrl + '/rest/konfiguration').subscribe((konstanten) => {
       //TODO: wenn Mockt nicht mehr verwendet wird, konstanten entsprechend auf die Interfaces mappen.
     });
   }
@@ -39,9 +44,9 @@ export class KonfigurationskonstantenService {
 
   /**
    * Mockt die Konfigurationskonstanten vom Backend auf festdefinierte Werte.
-   * 
+   *
    * @author Manuel Arling
-   * 
+   *
    */
   mockKonfigurationsKonstanten() {
     this.konfigurationsKonstanten = {
@@ -52,6 +57,9 @@ export class KonfigurationskonstantenService {
       konstantenSteckzeiten: {
         einsteckzeit_minuten: 15,
         aussteckzeit_minuten: 15,
+      },
+      konstantenLogin: {
+        emailRegex: '.*@koszarek.ml'
       }
     };
     console.log(this.konfigurationsKonstanten);
@@ -59,33 +67,43 @@ export class KonfigurationskonstantenService {
 
   /**
    * Gibt alle Konfigurationskonstanten als ein Objekt zurueck.
-   * 
+   *
    * @returns alle Konfigurationskonstanten des Systems
-   * 
-   * @author Manuel Arling
-   */
-  getKonfigurationsKonstanten(): konfigurationsKonstanten {
-    return this.konfigurationsKonstanten;
-  }
-  
-  
-  /**
-   * Gibt die Konfigurationskonstanten fuer die ladedauer zurueck.
-   * @returns Konfigurationskonstanten fuer die Ladedauer
-   * 
-   * @author Manuel Arling
-   */
-  getKonstantenLadedauer(): konstantenLadedauer {
-    return this.konfigurationsKonstanten.konstantenLadedauer;
-  }
-   
-  /**
-   * Gibt die Konfigurationskonstanten fuer die Ein- und Aussteckzeiten zurueck.
-   * @returns Konfigurationskonstanten fuer die Ein- und Aussteckzeiten.
    *
    * @author Manuel Arling
    */
-  getKonstantenSteckzeiten(): konstantenSteckzeiten {
-     return this.konfigurationsKonstanten.konstantenSteckzeiten;
+  getKonfigurationsKonstanten(): KonfigurationsKonstanten {
+    return this.konfigurationsKonstanten;
+  }
+
+
+  /**
+   * Gibt die Konfigurationskonstanten fuer die ladedauer zurueck.
+   *
+   * @returns Konfigurationskonstanten fuer die Ladedauer
+   * @author Manuel Arling
+   */
+  getKonstantenLadedauer(): KonstantenLadedauer {
+    return this.konfigurationsKonstanten.konstantenLadedauer;
+  }
+
+  /**
+   * Gibt die Konfigurationskonstanten fuer die Ein- und Aussteckzeiten zurueck.
+   *
+   * @returns Konfigurationskonstanten fuer die Ein- und Aussteckzeiten.
+   * @author Manuel Arling
+   */
+  getKonstantenSteckzeiten(): KonstantenSteckzeiten {
+    return this.konfigurationsKonstanten.konstantenSteckzeiten;
+  }
+
+  /**
+   * Gibt die Konfingurationkonstanten fuer das Login zurueck.
+   *
+   * @return KonstantenLogin
+   * @author Thomas Meese
+   */
+  getKonstantenLogin(): KonstantenLogin {
+    return this.konfigurationsKonstanten.konstantenLogin;
   }
 }

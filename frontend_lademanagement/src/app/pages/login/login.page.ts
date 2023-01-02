@@ -3,28 +3,37 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../services/authentication.service';
 import {AlertController, LoadingController} from '@ionic/angular';
 import {Router} from '@angular/router';
+import {KonstantenLogin} from '../../interfaces/interfaces';
+import {KonfigurationskonstantenService} from '../../services/konfigurationskonstanten.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
+/**
+ * Klasse die Daten fuer das Login verarbeitet.
+ *
+ * @author Thomas Meese
+ */
 export class LoginPage implements OnInit {
   loginFrom: FormGroup;
-  regexEmail = '.*@koszarek.ml';
   regexPasswort = '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,32}$'; //Maybe not needed
+  private loginKonstanten: KonstantenLogin;
 
   constructor(private formbuilder: FormBuilder,
               private authService: AuthenticationService,
+              private konstantenService: KonfigurationskonstantenService,
               private alertController: AlertController,
               private loadingController: LoadingController,
               private router: Router) {
   }
 
   ngOnInit() {
+    this.loginKonstanten = this.konstantenService.getKonstantenLogin();
     //Form generieren
     this.loginFrom = this.formbuilder.group({
-      email: new FormControl('', [Validators.required, Validators.pattern(this.regexEmail)]),
+      email: new FormControl('', [Validators.required, Validators.pattern(this.loginKonstanten.emailRegex)]),
       password: new FormControl('', []),
     });
   }

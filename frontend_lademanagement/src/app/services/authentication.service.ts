@@ -5,6 +5,12 @@ import {Observable, Subject} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service Klasse zum Authentifizieren von Benutzer mithilfe des Backends.
+ *
+ * @author Thomas Meese
+ *
+ */
 export class AuthenticationService {
   readonly rootUrl = 'http://localhost:8080/backend_war'; // http://192.168.137.1:8080/backend_war_exploded
   constructor(private http: HttpClient) {
@@ -16,6 +22,7 @@ export class AuthenticationService {
    *
    * @param email
    * @param password
+   * @author Thomas Meese
    */
   async signIn({email, password}): Promise<Observable<boolean>> {
     const httpOptions = {

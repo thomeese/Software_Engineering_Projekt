@@ -7,6 +7,11 @@ import {SlotPlanungService} from '../../services/slot-planung.service';
   templateUrl: './ladestatus.page.html',
   styleUrls: ['./ladestatus.page.scss'],
 })
+/**
+ * Klasse die, die Daten fuer die Darstellung des Ladestatusees aufbereitet.
+ *
+ * @author Thomas Meese
+ */
 export class LadestatusPage implements OnInit {
   ladestatus: Ladestatus;
 
@@ -64,8 +69,8 @@ export class LadestatusPage implements OnInit {
         geladeneEnergieKwH: 0,
         ladestandProzent: 0,
         ladedauerStundenMinuten: {
-          stunden:0,
-          minuten:0
+          stunden: 0,
+          minuten: 0
         }
       };
     }
@@ -100,7 +105,7 @@ export class LadestatusPage implements OnInit {
     const seconds = Number((ms / 1000).toFixed(1));
     const minutes = Number((seconds / 60).toFixed(1));
     const hours = Number((minutes / 60).toFixed(1));
-    const days = Number((hours/24).toFixed(1));
+    const days = Number((hours / 24).toFixed(1));
     if (seconds < 60) {
       return seconds + ' Sekunden';
     } else if (minutes < 60) {

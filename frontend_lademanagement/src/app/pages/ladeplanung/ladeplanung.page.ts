@@ -11,7 +11,7 @@ import {LoadingController, ModalController} from '@ionic/angular';
 import {BuchungPage} from './buchung/buchung.page';
 import {SlotPlanungService} from 'src/app/services/slot-planung.service';
 import {Reservierung, Slot} from '../../interfaces/interfaces';
-import { registerLocaleData } from '@angular/common';
+import {registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import {DetailInfoComponent} from './detail-info/detail-info.component';
 
@@ -26,6 +26,10 @@ registerLocaleData(localeDE);
 
 
 //Basis Kalender hier zu finden: https://mattlewis92.github.io/angular-calendar/#/responsive-week-view
+/**
+ *
+ * @author Manuel Arling, Thomas Meese
+ */
 export class LadeplanungPage implements OnInit, OnDestroy {
   language = localeDE;
   viewDate: Date = new Date();
@@ -126,7 +130,7 @@ export class LadeplanungPage implements OnInit, OnDestroy {
     }
   }
 
-  async openDetailModal(reservierung: Reservierung){
+  async openDetailModal(reservierung: Reservierung) {
     const modal = await this.modalCtrl.create({
       component: DetailInfoComponent,
       componentProps: {
@@ -137,6 +141,7 @@ export class LadeplanungPage implements OnInit, OnDestroy {
 
     await modal.present();
   }
+
   async openBookSlotModal(startDate: Date, endDate: Date) {
     const modal = await this.modalCtrl.create({
       component: BuchungPage,
@@ -155,8 +160,8 @@ export class LadeplanungPage implements OnInit, OnDestroy {
   handleEvent(action: string, event: CalendarEvent): void {
     if (event.title === 'Meine Buchung') {
       //eigene Buchung angeklickt, passende Reservierung suchen
-      for(const data of this.ownReservierungen){
-        if(data.slot.startzeit === event.start && data.slot.endzeit === event.end){
+      for (const data of this.ownReservierungen) {
+        if (data.slot.startzeit === event.start && data.slot.endzeit === event.end) {
           //Detailansicht starten
           this.openDetailModal(data);
         }
@@ -176,24 +181,24 @@ export class LadeplanungPage implements OnInit, OnDestroy {
    *
    * @return gibt die Kalendereintrage zurueck.
    */
-  async holeFreieSlots(): Promise<CalendarEvent[]>{
-      const asyncEvents: CalendarEvent[] = [];
-      //Zeitraume vom ZeitplanungService holen
-      //Freie Slots holen
-      const data = await this.slotplanungService.getFreeSlots().toPromise();
-      for (const slot of data) {
-        this.freeSlots.push(slot);
-        asyncEvents.push({
-          start: slot.startzeit,
-          end: slot.endzeit,
-          title: 'Frei',
-          color: {
-            primary: 'blue',
-            secondary: 'white'
-          }
-        });
-      }
-      return asyncEvents;
+  async holeFreieSlots(): Promise<CalendarEvent[]> {
+    const asyncEvents: CalendarEvent[] = [];
+    //Zeitraume vom ZeitplanungService holen
+    //Freie Slots holen
+    const data = await this.slotplanungService.getFreeSlots().toPromise();
+    for (const slot of data) {
+      this.freeSlots.push(slot);
+      asyncEvents.push({
+        start: slot.startzeit,
+        end: slot.endzeit,
+        title: 'Frei',
+        color: {
+          primary: 'blue',
+          secondary: 'white'
+        }
+      });
+    }
+    return asyncEvents;
   }
 
   /**
@@ -202,21 +207,21 @@ export class LadeplanungPage implements OnInit, OnDestroy {
    * @return gibt die Kalendereintrage zurueck.
    */
   async holeEigeneReservierungen(): Promise<CalendarEvent[]> {
-      const data = await this.slotplanungService.getOwnReservierungen().toPromise();
-        const asyncEvents: CalendarEvent[] = [];
-        for (const reservierung of data) {
-          this.ownReservierungen.push(reservierung);
-          asyncEvents.push({
-            start: reservierung.slot.startzeit,
-            end: reservierung.slot.endzeit,
-            title: 'Meine Buchung',
-            color: {
-              primary: 'yellow',
-              secondary: 'white'
-            }
-          });
+    const data = await this.slotplanungService.getOwnReservierungen().toPromise();
+    const asyncEvents: CalendarEvent[] = [];
+    for (const reservierung of data) {
+      this.ownReservierungen.push(reservierung);
+      asyncEvents.push({
+        start: reservierung.slot.startzeit,
+        end: reservierung.slot.endzeit,
+        title: 'Meine Buchung',
+        color: {
+          primary: 'yellow',
+          secondary: 'white'
         }
-        return asyncEvents;
+      });
+    }
+    return asyncEvents;
   }
 
   /**
@@ -233,7 +238,7 @@ export class LadeplanungPage implements OnInit, OnDestroy {
     });
     await loading.present();
     const eigeneReservierungen = await this.holeEigeneReservierungen() as CalendarEvent[];
-    const freieSlots =  await this.holeFreieSlots() as CalendarEvent[];
+    const freieSlots = await this.holeFreieSlots() as CalendarEvent[];
     this.events = eigeneReservierungen.concat(freieSlots);
     await loading.dismiss();
   }

@@ -9,6 +9,8 @@ import {format} from 'date-fns';
   styleUrls: ['./detail-info.component.scss'],
 })
 /**
+ * Klasse die, die Daten fuer Detailinformationen aufbereitet.
+ *
  * @author Thomas Meese
  */
 export class DetailInfoComponent implements OnInit {

@@ -36,17 +36,22 @@ export interface Punktekonto{
   punktestand: number;
 }
 
-export interface konfigurationsKonstanten {
-  konstantenLadedauer: konstantenLadedauer;
-  konstantenSteckzeiten: konstantenSteckzeit;
+export interface KonfigurationsKonstanten {
+  konstantenLadedauer: KonstantenLadedauer;
+  konstantenSteckzeiten: KonstantenSteckzeiten;
+  konstantenLogin: KonstantenLogin;
 }
 
-export interface konstantenLadedauer {
+export interface KonstantenLadedauer {
   minimale_ladedauer_minuten: number;
   maximale_ladedauer_minuten: number;
 }
 
-export interface konstantenSteckzeiten {
+export interface KonstantenSteckzeiten {
   einsteckzeit_minuten: number;
   aussteckzeit_minuten: number;
+}
+
+export interface KonstantenLogin{
+  emailRegex: string;
 }
