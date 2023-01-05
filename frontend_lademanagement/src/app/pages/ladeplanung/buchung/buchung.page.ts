@@ -108,8 +108,9 @@ export class BuchungPage implements OnInit {
       if (erstellteReservierung !== 0) {
         //Das erhaltene Reservierungsobjekt wird momentan nicht verwendet.
         console.log(erstellteReservierung);
+        document.location.reload();
+        this.closeModal();
       }
-      this.closeModal();
     });
   }
 
