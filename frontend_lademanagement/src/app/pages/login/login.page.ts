@@ -39,7 +39,9 @@ export class LoginPage implements OnInit {
   }
 
   /**
-   * meldet einen nicht angemeldeten Benutzer mittels E-Mail adresse an
+   * meldet einen nicht angemeldeten Benutzer mittels E-Mail-Adresse an
+   *
+   * @author Thomas Meese
    */
   async signIn() {
     const loading = await this.loadingController.create();
@@ -60,6 +62,7 @@ export class LoginPage implements OnInit {
    *
    * @param header - Titel
    * @param message - anzuzeigende Nachricht
+   * @author Thomas Meese
    */
   async displayAlert(header: string, message: string) {
     const alert = await this.alertController.create({

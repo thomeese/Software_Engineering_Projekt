@@ -8,7 +8,7 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SlotPlanungService {
-  readonly rootUrl = 'http://localhost:8080/backend_war'; // http://192.168.137.1:8080/backend_war_exploded
+  readonly rootUrl = 'http://192.168.137.1:8080/backend_war'; // http://192.168.137.1:8080/backend_war_exploded
   constructor(private http: HttpClient) {
   }
 
@@ -35,7 +35,6 @@ export class SlotPlanungService {
    * Holt alle freien Slots von dem Backend und formatiert diese als eine Liste von Slots zurueck.
    */
   getFreeSlots(): Observable<Slot[]> {
-    //TODO: eventuell wird hier der falsche Typ erwartet muesste es nicht eine Reservierung sein
     return this.http.get<Slot[]>(this.rootUrl + '/rest/slot?frei=1')
       .pipe(
         map((results: Slot[]) => results.map((slot: Slot) => ({
@@ -66,7 +65,7 @@ export class SlotPlanungService {
    * Holt die Informationen zum Punktekonto vom Backend
    */
   getPunktekontoInformations(): Observable<Punktekonto> {
-    return this.http.get<Punktekonto>(this.rootUrl + '/rest/punktesystem');
+    return this.http.get<Punktekonto>(this.rootUrl + '/rest/punktesystem',{withCredentials:true});
   }
 
   /**
