@@ -1,14 +1,14 @@
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Ladestatus, LadestatusDTO, Punktekonto, Reservierung, Slot, SlotID} from '../interfaces/interfaces';
+import {Ladestatus, LadestatusDTO, Punktekonto, Reservierung, Slot} from '../interfaces/interfaces';
 import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SlotPlanungService {
-  readonly rootUrl = 'http://192.168.137.1:8080/backend_war'; // http://192.168.137.1:8080/backend_war_exploded
+  readonly rootUrl = 'http://localhost:8080/backend_war'; // http://192.168.137.1:8080/backend_war_exploded
   constructor(private http: HttpClient) {
   }
 
