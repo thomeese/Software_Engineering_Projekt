@@ -7,7 +7,7 @@
 <ion-content>
   <ion-card class="form-card">
     <ion-card-content>
-      <form [formGroup]="this.loginFrom" (submit)="this.signIn()">
+      <form [formGroup]="this.loginFrom" (submit)="this.signIn()"  (keyup.enter)="this.signIn()">
         <ion-item>
           <ion-icon name="mail-outline"></ion-icon>
           <ion-label>Email:</ion-label>
