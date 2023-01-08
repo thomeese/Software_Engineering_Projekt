@@ -66,11 +66,11 @@ export class LadestatusPage implements OnInit {
     //falls nicht geladen wird Mock werte setzen
     if (!this.ladestatus) {
       this.ladestatus = {
-        geladeneEnergieKwH: 100,
-        ladestandProzent: 20,
+        geladeneEnergieKwH: 0,
+        ladestandProzent: 0,
         ladedauerStundenMinuten: {
-          stunden: 3,
-          minuten: 5
+          stunden: 0,
+          minuten: 0
         }
       };
     }
