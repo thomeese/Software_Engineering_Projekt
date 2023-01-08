@@ -64,13 +64,13 @@ export class LadestatusPage implements OnInit {
     //Ladestatus holen
     this.ladestatus = await this.slotplanung.getLadestatus().toPromise();
     //falls nicht geladen wird Mock werte setzen
-    if (this.ladestatus === null) {
+    if (!this.ladestatus) {
       this.ladestatus = {
-        geladeneEnergieKwH: 0,
-        ladestandProzent: 0,
+        geladeneEnergieKwH: 100,
+        ladestandProzent: 20,
         ladedauerStundenMinuten: {
-          stunden: 0,
-          minuten: 0
+          stunden: 3,
+          minuten: 5
         }
       };
     }

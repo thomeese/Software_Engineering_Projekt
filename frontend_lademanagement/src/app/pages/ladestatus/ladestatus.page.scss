@@ -12,10 +12,11 @@
 
 .battery-card {
   position: absolute;
-  left: 25px;
-  bottom: 30px;
-  width: 800px;
-  height: 455px;
+  left: 2%;
+  bottom: 2%;
+  width: 45%;
+  height: 55%;
+  top:41%;
   background-color: white;
   border-radius: 10px;
   display: grid;
@@ -25,8 +26,8 @@
 }
 
 .battery-card-small-screen {
-  position: relative;
-  width: 600px;
+  position: center;
+  width: 60%;
   height: 408px;
   background-color: white;
   border-radius: 10px;
@@ -96,18 +97,19 @@
 
 .card-bottom-right{
   position: absolute;
-  bottom: 25px;
-  right: 25px;
-  width: 800px;
-  top:400px;
+  bottom: 3%;
+  right: 1.25%;
+  width: 45%;
+  top:40%;
   border-radius: 10px;
   box-shadow: -1px 3px 5px 0px rgba(0,0,0,0.75);
 }
 .card-small-screen{
   position: relative;
-  width: 600px;
-  height: 400px;
+  width: 60%;
+  height: 40%;
   border-radius: 10px;
+  left: 19.25%;
   box-shadow: -1px 3px 5px 0px rgba(0,0,0,0.75);
 }
 
