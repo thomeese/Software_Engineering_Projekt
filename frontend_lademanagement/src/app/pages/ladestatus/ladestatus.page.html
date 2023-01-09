@@ -25,8 +25,8 @@
     <ion-card class="card-bottom-right">
       <ion-card-header class="sub-header"> Verbleibende Ladezeit im Slot</ion-card-header>
       <ion-card-content class="sub-content"> {{this.msToTime(this.remainingSlottime)}} </ion-card-content>
-      <ion-card-header class="sub-header"> Verbleibende Ladezeit, bis das Fahrzeug voll ist</ion-card-header>
-      <ion-card-content class="sub-content"> {{this.ladestatus.ladedauerStundenMinuten.stunden}} H {{this.ladestatus.ladedauerStundenMinuten.minuten}} M</ion-card-content>
+      <ion-card-header class="sub-header" *ngIf="!this.fahrzeugVoll"> Verbleibende Ladezeit, bis das Fahrzeug voll ist</ion-card-header>
+      <ion-card-content class="sub-content" *ngIf="!this.fahrzeugVoll"> {{this.ladestatus.ladedauerStundenMinuten.stunden}} H {{this.ladestatus.ladedauerStundenMinuten.minuten}} M</ion-card-content>
     </ion-card>
     <section class="battery">
       <div class="battery-card">
