@@ -64,9 +64,10 @@ export class LadestatusPage implements OnInit {
    */
   async setup() {
     //Ladestatus holen
-    this.ladestatus = await this.slotplanung.getLadestatus().toPromise();
-    //falls nicht geladen wird Mock werte setzen
-    if (this.ladestatus === null) {
+    try {
+      this.ladestatus = await this.slotplanung.getLadestatus().toPromise();
+    }catch (e) {
+      //falls nicht geladen wird oder keine Werte vom Backend kommen, Mock werte setzen
       this.ladestatus = {
         geladeneEnergieKwH: 0,
         ladestandProzent: 0,
