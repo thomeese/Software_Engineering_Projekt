@@ -35,11 +35,7 @@ export class LadestatusPage implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     const screenWidth = window.innerWidth;
-    if (screenWidth < 1670) {
-      this.fullscreen = false;
-    } else {
-      this.fullscreen = true;
-    }
+    this.fullscreen = screenWidth >= 1670;
   }
 
   /**

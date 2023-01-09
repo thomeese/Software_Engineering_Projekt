@@ -36,7 +36,7 @@
         </div>
         <div class="outer-battery">
           <div class="battery-level">
-            <div class="battery-fluid" [style.height]="this.ladestatus.ladestandProzent+'%'"
+            <div class="battery-fluid" [style.height]="this.ladestatus.ladestandProzent-3+'%'"
                  [style.background]="this.batteryFluidColor"></div>
           </div>
         </div>
@@ -51,7 +51,7 @@
       Bisher geladene Leistung
     </ion-card-subtitle>
     <ion-card-content class="main-content">
-      {{this.ladestatus.geladeneEnergieKwH}}kw
+      {{this.ladestatus.geladeneEnergieKwH}}kWh
     </ion-card-content>
     <ion-card class="card-small-screen">
       <ion-card-header class="sub-header"> Verbleibende Ladezeit im Slot</ion-card-header>

@@ -1,4 +1,4 @@
-import {Component, Input, LOCALE_ID, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {ModalController} from '@ionic/angular';
 import {SlotPlanungService} from '../../../services/slot-planung.service';
