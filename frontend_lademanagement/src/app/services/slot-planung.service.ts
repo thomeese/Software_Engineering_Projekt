@@ -1,7 +1,7 @@
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Ladestatus, LadestatusDTO, Punktekonto, Reservierung, Slot, SlotID} from '../interfaces/interfaces';
+import {Ladestatus, LadestatusDTO, Punktekonto, Reservierung, Slot} from '../interfaces/interfaces';
 import {map} from 'rxjs/operators';
 
 @Injectable({

@@ -22,7 +22,7 @@ export class LadestatusPage implements OnInit {
   isCharging = false;
   haeader: string;
   fullscreen = true;
-
+  fahrzeugVoll = false;
   constructor(private slotplanung: SlotPlanungService) {
   }
 
@@ -35,11 +35,7 @@ export class LadestatusPage implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     const screenWidth = window.innerWidth;
-    if (screenWidth < 1670) {
-      this.fullscreen = false;
-    } else {
-      this.fullscreen = true;
-    }
+    this.fullscreen = screenWidth >= 1670;
   }
 
   /**
@@ -59,12 +55,15 @@ export class LadestatusPage implements OnInit {
 
   /**
    * holt alle benoetigeten Daten fuer die Visualisierung auf der Seite
+   * und bereitet sie auf. Die angezeigte Batterie und die Texte werden
+   * entsprechend des erhaltenen Statuses angepasst.
    */
   async setup() {
     //Ladestatus holen
-    this.ladestatus = await this.slotplanung.getLadestatus().toPromise();
-    //falls nicht geladen wird Mock werte setzen
-    if (!this.ladestatus) {
+    try {
+      this.ladestatus = await this.slotplanung.getLadestatus().toPromise();
+    }catch (e) {
+      //falls nicht geladen wird oder keine Werte vom Backend kommen, Mock werte setzen
       this.ladestatus = {
         geladeneEnergieKwH: 0,
         ladestandProzent: 0,
@@ -74,11 +73,13 @@ export class LadestatusPage implements OnInit {
         }
       };
     }
-    //wenn nicht geladen wird Seite anpassen
-    if (this.ladestatus.ladestandProzent === 0 && this.ladestatus.geladeneEnergieKwH === 0) {
+    if (this.ladestatus.ladestandProzent === 0 && this.ladestatus.geladeneEnergieKwH === 0) { // Kein Fahrzeug wird geladen
       this.haeader = 'Kein Fahrzeug von Ihnen wird derzeit geladen';
       this.isCharging = false;
-    } else {
+    } else  if (this.ladestatus.ladestandProzent === 100){ // Fahrzeug ist voll
+      this.haeader = 'Ihr Fahrzeug ist vollständig geladen und kann abgeholt werden';
+      this.fahrzeugVoll = true;
+    } else{ // Fahrzeug wird geladen
       this.haeader = 'Ihr Fahrzeug wird geladen';
       this.isCharging = true;
     }
