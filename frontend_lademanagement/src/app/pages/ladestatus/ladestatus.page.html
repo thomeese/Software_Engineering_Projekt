@@ -8,7 +8,10 @@
 </ion-header>
 <ion-content >
   <ion-card class="main-card"  *ngIf="!isCharging">
-    <ion-card-header class="main-header">
+    <ion-card-header class="main-header" *ngIf="!this.tinyscreen">
+      {{this.haeader}}
+    </ion-card-header>
+    <ion-card-header class="main-header-tiny" *ngIf="this.tinyscreen">
       {{this.haeader}}
     </ion-card-header>
   </ion-card>
