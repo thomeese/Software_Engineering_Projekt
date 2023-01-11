@@ -76,11 +76,11 @@ export class LadestatusPage implements OnInit {
     }catch (e) {
       //falls nicht geladen wird oder keine Werte vom Backend kommen, Mock werte setzen
       this.ladestatus = {
-        geladeneEnergieKwH: 100,
-        ladestandProzent: 50,
+        geladeneEnergieKwH: 0,
+        ladestandProzent: 0,
         ladedauerStundenMinuten: {
-          stunden: 30,
-          minuten: 20
+          stunden: 0,
+          minuten: 0
         }
       };
     }
