@@ -22,20 +22,31 @@ export class LadestatusPage implements OnInit {
   isCharging = false;
   haeader: string;
   fullscreen = true;
+  tinyscreen = false;
   fahrzeugVoll = false;
   constructor(private slotplanung: SlotPlanungService) {
   }
 
   /**
-   * prueft, ob die Bildschirmgroesse fuer die jeweile ansicht ausreichend ist und passt ggf.
+   * prueft, ob die Bildschirmgroesse fuer die jeweilige ansicht ausreichend ist und passt ggf.
    * die Ansicht an.
    *
    * @param event - Resize event
    */
   @HostListener('window:resize', ['$event'])
   onResize(event) {
+    this.checkScreen();
+  }
+
+  /**
+   * Prueft aktuelle Bildschirmgroesse
+   *
+   * @author Thomas Meese
+   */
+  checkScreen() {
     const screenWidth = window.innerWidth;
     this.fullscreen = screenWidth >= 1670;
+    this.tinyscreen = screenWidth <= 850;
   }
 
   /**
@@ -120,6 +131,7 @@ export class LadestatusPage implements OnInit {
 
   ngOnInit() {
     this.setup();
+    this.checkScreen();
   }
 
 }

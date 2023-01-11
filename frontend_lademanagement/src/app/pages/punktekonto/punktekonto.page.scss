@@ -6,13 +6,22 @@
   align-items: center;
 }
 
-.sub-card{
+.sub-card-full{
   border-radius: 10px;
-  left: 25%;
+  left: 20%;
   top:25%;
-  width: 50%;
+  width: 60%;
   height: 50%;
 }
+
+.sub-card-small{
+  border-radius: 10px;
+  left: 5%;
+  top: 10%;
+  width: 80%;
+  height: 80%;
+}
+
 .header {
   top: 20%;
   font-size: 75px;
@@ -20,8 +29,21 @@
   text-align: center;
 }
 
+.header-small {
+  top: 20%;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+}
+
 .content{
   top: 20%;
   font-size: 65px;
+  text-align: center;
+}
+
+.content-small{
+  top: 20%;
+  font-size: 35px;
   text-align: center;
 }

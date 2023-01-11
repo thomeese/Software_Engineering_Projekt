@@ -37,11 +37,33 @@
   box-shadow: -1px 3px 5px 0px rgba(0,0,0,0.75);
 }
 
+.battery-card-tiny-screen {
+  position: center;
+  width: 89%;
+  height: 408px;
+  background-color: white;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  box-shadow: -1px 3px 5px 0px rgba(0,0,0,0.75);
+}
+
 .battery-text {
   margin-left: 10px;
 
   h1 {
     margin-left: 15px;
+    font-weight: bold;
+  }
+
+}
+
+.battery-text-tiny{
+  margin-left: 5px;
+
+  h1 {
+    margin-left: 5px;
     font-weight: bold;
   }
 
@@ -66,11 +88,35 @@
   left: 10px;
 }
 
+.outer-battery-tiny {
+  margin: 10px;
+  position: relative;
+  background: transparent;
+  width: 80px;
+  height: 250px;
+  border: 3px solid black;
+  border-radius: 5px;
+  padding: 5px;
+  bottom: 5px;
+  left: 10px;
+}
+
 .outer-battery::after {
   content: '';
   position: absolute;
   top: -15px;
   right: 47px;
+  width: 25px;
+  height: 8px;
+  border: 3px solid black;
+  border-radius: 5px;
+}
+
+.outer-battery-tiny::after {
+  content: '';
+  position: absolute;
+  top: -15px;
+  right: 21px;
   width: 25px;
   height: 8px;
   border: 3px solid black;
@@ -113,6 +159,15 @@
   box-shadow: -1px 3px 5px 0px rgba(0,0,0,0.75);
 }
 
+.card-tiny-screen{
+  position: relative;
+  width: 80%;
+  height: 40%;
+  border-radius: 10px;
+  left: 19.25%;
+  box-shadow: -1px 3px 5px 0px rgba(0,0,0,0.75);
+}
+
 .main-header{
   font-size: 80px;
   text-align: center;
@@ -120,6 +175,16 @@
 
 .sub-header{
   margin-top: 55px;
+  font-size: 35px;
+}
+
+.main-header-tiny{
+  font-size: 40px;
+  text-align: center;
+}
+
+.sub-header-tiny{
+  margin-top: 45px;
   font-size: 35px;
 }
 

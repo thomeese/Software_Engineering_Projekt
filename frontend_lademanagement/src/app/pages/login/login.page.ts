@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../services/authentication.service';
 import {AlertController, LoadingController} from '@ionic/angular';
@@ -29,6 +29,38 @@ export class LoginPage implements OnInit {
               private router: Router) {
   }
 
+  /**
+   * Prueft, ob die Bildschirmgroesse fuer die jeweilige ansicht ausreichend ist und passt ggf.
+   * die Ansicht an.
+   *
+   * @param event - Resize event
+   * @author Thomas Meese
+   */
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.setCSS();
+  }
+
+  /**
+   * Passt die CSS-Variablen fuer die Groesse der Card in Abhaengigkeit der
+   * Fenstergroesse an
+   *
+   * @author Thomas Meese
+   */
+  setCSS() {
+    const screenWidth = window.innerWidth;
+    const element = document.getElementsByClassName('form-card')[0] as HTMLElement;
+    if (screenWidth > 800) {
+      element.style.height = '50%';
+      element.style.width = '50%';
+      element.style.marginLeft = '25%';
+    } else {
+      element.style.height = '50%';
+      element.style.width = '80%';
+      element.style.marginLeft = '10%';
+    }
+  }
+
   ngOnInit() {
     this.loginKonstanten = this.konstantenService.getKonstantenLogin();
     //Form generieren
@@ -36,6 +68,7 @@ export class LoginPage implements OnInit {
       email: new FormControl('', [Validators.required, Validators.pattern(this.loginKonstanten.emailRegex)]),
       password: new FormControl('', []),
     });
+    this.setCSS();
   }
 
   /**

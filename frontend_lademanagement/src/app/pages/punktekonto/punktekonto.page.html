@@ -9,9 +9,13 @@
 
 <ion-content>
 <ion-card class="main-card">
-  <ion-card class = "sub-card" *ngIf="this.punktekonto">
+  <ion-card class = "sub-card-full" *ngIf="this.punktekonto && this.fullsScreen">
     <ion-card-header class="header">Mein Punktestand</ion-card-header>
     <ion-card-content class="content">{{this.punktekonto.punktestand}} Punkte</ion-card-content>
+  </ion-card>
+  <ion-card class = "sub-card-small" *ngIf="this.punktekonto && !this.fullsScreen">
+    <ion-card-header class="header-small">Mein Punktestand</ion-card-header>
+    <ion-card-content class="content-small">{{this.punktekonto.punktestand}} Punkte</ion-card-content>
   </ion-card>
 </ion-card>
 </ion-content>
